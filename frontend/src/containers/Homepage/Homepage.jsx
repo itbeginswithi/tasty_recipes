@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Header} from '../../components'
+import {Header, RecipeList} from '../../components'
 
 const Homepage = () => {
   return (
@@ -9,6 +9,7 @@ const Homepage = () => {
 
         <br/>
         <h1>Home page</h1>
+        <RecipeList/>
     </div>
   )
 }

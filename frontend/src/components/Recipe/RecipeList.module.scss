@@ -1,0 +1,75 @@
+.flex{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    
+    max-width: 120rem;
+    margin: 0 auto;
+
+}
+@media (max-width: 1200px){
+    .flex{
+        padding: 0 2rem;
+    }
+}
+
+.loadingBox{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    min-width: 28rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 10px 0px rgb(0 0 0 / 25%);
+    overflow: hidden;
+
+    & .loadingAnimation{
+        position: relative;
+        height: 100%;
+        width: 100%;
+        
+        background-color: rgba(0,0,0,0.5);
+        overflow: hidden;
+
+        &:after{
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(255,255, 255,0.5);
+            animation: leftToRight 1s linear infinite;
+        }
+    }
+
+    & .image{
+        padding-top: 60%;
+    }
+
+    & .loadingInfo{
+        padding: 1rem 2rem;
+
+        & div:nth-child(1){
+            height: 25px;
+            width: 80%;
+            margin-bottom: 1rem;
+        }
+
+        & div:nth-child(2){
+            height: 20px;
+            width: 50%;
+        }
+    }
+}
+
+@keyframes leftToRight {
+    0%{
+        transform: translateX(-100%);
+    }
+
+    100%{
+        transform: translateX(100%);
+    }
+}
