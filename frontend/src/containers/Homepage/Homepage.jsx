@@ -6,9 +6,6 @@ const Homepage = () => {
   return (
     <div>
         <Header/>
-
-        <br/>
-        <h1>Home page</h1>
         <RecipeList/>
     </div>
   )
