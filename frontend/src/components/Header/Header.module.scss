@@ -1,13 +1,18 @@
 @import "../../styles/abstracts/all";
 
 .container{
+    position: sticky;
+    top: 0;
+
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
 
     padding: 2rem;
+    background-color: #fff;
     box-shadow: 5px 0 8px 0px rgba(0,0,0,0.3);
+    z-index: 9999;
 
     @media (max-width: 768px){
         justify-content: space-between;

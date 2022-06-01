@@ -6,13 +6,16 @@
     
     max-width: 120rem;
     margin: 5rem auto;
-}
-
-@media (max-width: 1200px){
-    .flex{
-        padding: 0 2rem;
+    
+    @media (max-width: 1200px){
+            padding: 0 2rem;
+    }
+    
+    @media (max-width: 430px){
+            padding: 0 .5rem;
     }
 }
+
 
 .loadingBox{
     display: flex;

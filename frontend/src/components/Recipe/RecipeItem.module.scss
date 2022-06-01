@@ -3,23 +3,34 @@
 .recipeItem {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   flex: 28.5rem;
 
   min-width: 28rem;
   max-width: 28rem;
-  height: 100%;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px 0px rgb(0 0 0 / 25%);
   overflow: hidden;
 
-  @media (max-width: 767px) {
-    min-width: 27rem;
+  @media (max-width: 620px) {
+    flex: 19.5rem;
+    min-width: 19.5rem;
     max-width: 90%;
   }
 
-  @media (max-width: 567px) {
-    min-width: 27rem;
-    max-width: 80%;
+  @media (max-width: 480px) {
+  }
+
+  @media (max-width: 480px) {
+    flex: 19.5rem;
+    min-width: 19.5rem;
+    max-width: 90%;
+  }
+  
+  @media (max-width: 430px) {
+    flex: 28.5rem;
+    min-width: 10rem;
+    max-width: 90%;
   }
 
   &__image {
