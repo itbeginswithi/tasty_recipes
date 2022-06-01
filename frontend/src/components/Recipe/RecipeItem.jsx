@@ -62,7 +62,7 @@ const RecipeItem = ({
             )}
             {servings !== 0 && (
               <div className={classes.healthNumbers_item}>
-                Servings: <strong>{servings}</strong>
+                Yield: <strong>{servings}</strong>
               </div>
             )}
           </div>
