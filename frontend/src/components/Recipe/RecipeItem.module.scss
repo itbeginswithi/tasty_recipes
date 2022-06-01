@@ -12,6 +12,16 @@
   box-shadow: 0 0 10px 0px rgb(0 0 0 / 25%);
   overflow: hidden;
 
+  @media (max-width: 767px) {
+    min-width: 27rem;
+    max-width: 90%;
+  }
+
+  @media (max-width: 567px) {
+    min-width: 27rem;
+    max-width: 80%;
+  }
+
   &__image {
     padding-top: 60%;
     background-color: grey;
