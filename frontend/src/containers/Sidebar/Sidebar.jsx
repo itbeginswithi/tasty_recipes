@@ -14,10 +14,6 @@ const Sidebar = ({isOpen, setIsOpen}) => {
   // const {toggleFav, increment, advice} = useBookmarkContext();
   const [favourites, setFavourites] = useState([]);
 
-  // useEffect(() =>{
-  //   setFavourites(JSON.parse(localStorage.getItem('advices')));
-  // }, [increment])
-
   const animationOptions = { 
     loop: false,
     autoPlay: true,

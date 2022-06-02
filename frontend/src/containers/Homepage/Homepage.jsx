@@ -1,11 +1,10 @@
 import React from 'react'
 
-import {Header, RecipeList} from '../../components'
+import {RecipeList} from '../../components'
 
 const Homepage = () => {
   return (
     <div>
-        {/* <Header/> */}
         <RecipeList/>
     </div>
   )

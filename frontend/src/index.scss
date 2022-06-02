@@ -1,5 +1,6 @@
 html{
   font-size: 62.5%;
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
@@ -19,7 +20,13 @@ body {
   box-sizing: inherit;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/******************************/
+::-webkit-scrollbar{
+  width: .5rem;
+  background: whitesmoke;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: grey;
+  border-radius: 1rem;
 }
