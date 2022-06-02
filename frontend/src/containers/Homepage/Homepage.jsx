@@ -5,7 +5,7 @@ import {Header, RecipeList} from '../../components'
 const Homepage = () => {
   return (
     <div>
-        <Header/>
+        {/* <Header/> */}
         <RecipeList/>
     </div>
   )

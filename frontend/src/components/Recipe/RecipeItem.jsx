@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { GiKitchenScale } from "react-icons/gi";
 import { ImCalculator } from "react-icons/im";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { TbToolsKitchen2 } from "react-icons/tb";
 import { MdThumbUpOffAlt, MdThumbUp, MdOutlineTimer } from "react-icons/md";
+import {Link} from 'react-router-dom';
 
 import classes from "./RecipeItem.module.scss";
 
@@ -23,11 +24,13 @@ const RecipeItem = ({
   const [favorite, setFavorite] = useState(false);
   const [liked, setLiked] = useState(false);
 
+  const recipeId = label?.toLowerCase().split(' ').join('-');
+
   return (
     <div className={classes.recipeItem}>
 
 
-      <a href={'/recipe/' + id} target="_blank" rel="noreferrer" className={classes.recipeItem__link}>
+      <Link to={'/recipe/' + recipeId} className={classes.recipeItem__link}>
       <div
         className={classes.recipeItem__image}
         style={{ backgroundImage: "url(" + imageUrl + ")" }}
@@ -75,7 +78,7 @@ const RecipeItem = ({
               ))}
           </div>
         </div>
-      </a>
+      </Link>
         <div className={classes.actions}>
           <button type="button" className={`${classes.actions_btn} ${classes.btn_like}`}>
               

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {BsSearch, BsFillBookmarkHeartFill} from 'react-icons/bs';
 import {RiArrowDropDownLine, RiArrowDropUpLine, RiUser6Line} from 'react-icons/ri';
 import {IoMdExit} from 'react-icons/io';
@@ -12,15 +12,22 @@ import { setRecipes, setFetchingRecipes } from '../../store/recipesSlice';
 const Header = () => {
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [query, setQuery] = useState('');
+  const [prevQuery, setPrevQuery] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const fetchRecipes = async (query) => {
     navigate('/');
-    dispatch(setFetchingRecipes(true));
-    const recipes = await getRecipes(query);
+
+    if(query === prevQuery || query === '') {
+      return;
+    }
     
+    setPrevQuery(query);
+    dispatch(setFetchingRecipes(true));
+
+    const recipes = await getRecipes(query);
     if(typeof recipes === 'object'){
       dispatch(setFetchingRecipes(false));
       dispatch(setRecipes({recipes}));
@@ -30,9 +37,9 @@ const Header = () => {
 
   return (
     <div className={classes.container}>
-      <a href="/" className={classes.logo}>
+      <Link to="/" className={classes.logo}>
 
-      </a>
+      </Link>
 
       <div className={classes.search}>
         <input 
