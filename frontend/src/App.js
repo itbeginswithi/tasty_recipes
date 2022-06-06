@@ -7,6 +7,7 @@ const App = () => {
   return (
     <Router>
       <Header/>
+      {/* <Sidebar/> */}
       <Routes>
         <Route exact path="/recipe/:id" element={<RecipeDetail/>}/>
         <Route path="*" element={<Homepage/>}/>
