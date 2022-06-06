@@ -4,8 +4,9 @@ import { useLocation } from 'react-router-dom';
 
 const RecipeDetail = () => {
   const { recipes } =  useSelector(state => state.recipes);
-  const location = useLocation();
   const [oldRecipeLabel, setOldRecipeLabel] = useState('');
+
+  const location = useLocation();
   const recipeLabel = location.pathname.split('/')[2].split('-').join(' ');
 
   let recipeRef = useRef();
