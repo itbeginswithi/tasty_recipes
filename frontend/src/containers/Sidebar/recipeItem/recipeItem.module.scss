@@ -1,0 +1,110 @@
+.recipe{
+    width: 48%;
+    max-width: 48%;
+
+    border: 1px solid whitesmoke;
+    border-radius: 1rem;
+    list-style: none;
+    overflow: hidden;
+
+    transition: all .2s linear;
+    
+    @media (max-width: 500px){
+        width: 100%;
+        max-width: 100%;
+    }
+
+    &:hover{
+        box-shadow: 0 0 5px 0px rgb(0 0 0 / 15%);
+        transform: translateY(-.1rem);
+        
+        
+        @media (max-width: 500px){
+            box-shadow: 0 0 8px 0px rgb(0 0 0 / 20%);
+        }
+    }
+    
+    &__container{
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        color: #000;
+        text-decoration: none;
+
+        @media (min-width: 330px) and (max-width: 500px){
+            flex-direction: row;
+            padding: .5rem;
+        }
+    }
+    
+    &__img{
+        padding-top: 50%;
+        
+        background-color: whitesmoke;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        @media (min-width: 330px) and (max-width: 500px){
+            padding-top: 35%;
+            min-width: 45%;
+            border-radius: .7rem;
+        }
+    }
+
+    &__info{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        padding: 1rem;
+        overflow: hidden;
+
+        & .title{
+            margin: 0;
+            font-size: 1.4rem;
+            
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        & .labels {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: .6rem;
+            flex-wrap: wrap;
+
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            & .label{
+                display: flex;
+                align-items: center;
+                gap: .2rem;
+
+                font-size: 1.2rem;
+                padding: 0;
+
+                & svg{
+                    font-size: 1.2rem;
+                }
+            }
+        }
+    }
+
+    &__actions{
+        display: flex;
+        justify-content: flex-end;
+
+        margin-top: auto;
+    }
+}
+
+.singleRecipe{
+    width: 100% !important;
+    max-width: 100% !important;
+}

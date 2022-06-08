@@ -1,0 +1,29 @@
+.btn{
+    min-width: 3rem;
+    min-height: 3rem;
+    border: none;
+    background-color: transparent;
+    border-radius: 5rem;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    
+    & svg{
+      font-size: 2rem;
+    }
+
+    &_fav{
+        color: rgb(255, 122, 145);
+        
+    }
+    
+    & .btn_outlineFav{
+        transition: all .1s linear;
+        
+        &:hover{
+            color: rgb(255, 122, 145);
+        }
+    }
+}

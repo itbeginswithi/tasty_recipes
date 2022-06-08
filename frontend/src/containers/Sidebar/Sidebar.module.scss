@@ -3,22 +3,11 @@
     right: 0;
     top: 0;
     display: flex;
-    width: 40%;
+    width: 100%;
     height: 100vh;
     overflow: hidden;
-    z-index: 5;
     transition: all 2s ease forwards;
-}
-
-.sidebar__container{
-    position: relative;
-    right: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    padding: 1rem;
-    overflow-y: scroll;
+    z-index: 150;
 }
 
 .sidebar{
@@ -32,76 +21,61 @@
     list-style: none;
     margin: 0;
     padding: 0;
-}
 
-.advice{
-    width: 100%;
-    height: fit-content;
-    padding: 1.5rem;
-    background-color: whitesmoke;
-
-    &__text{
-        font-family: Roboto;
-        font-weight: 300;
+    &__fullbg{
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(5px)
     }
 
-    &__cta{ 
-        display: flex;
-        gap: 8px;
-        justify-content: flex-end;
-        align-items: center;
-        flex-wrap: wrap;
+    &__container{
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 100%;
+        max-width: 45rem;
+        height: 100%;
+        background-color: #fff;
+        padding: 1rem;
+        overflow-y: scroll;
 
-        &_btn{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            width: 40px;
-            height: 40px;
-            border: 0;
-            background-color: transparent;
-            border-radius: 50%;
-            transition: all 0.35s ease;
-            cursor: pointer;
-            
-            &:hover {
-              background-color: rgba($color: #fff, $alpha: 0.45);
-              backdrop-filter: blur(4px);
-              -webkit-backdrop-filter: blur(4px);
-              box-shadow: 0 0px 8px rgba(0, 0, 0, 0.3);
-            }
-      
-            &:active {
-              box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
-            }
+        @media (min-width: 300px) and (max-width: 500px) {
+            max-width: 100%;
         }
+    }    
+}
+
+
+
+
+.lottieContainer{
+    position: relative;
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:after{
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
     }
 }
 
-.close{
-    display: inline-block;
-    min-width: 3.5rem;
-    height: 3.5rem;
+.recipeList{
     display: flex;
-    justify-content:center;
-    align-items:center;
-    font-size: 1.7rem;
-    border: 0;
-    border-radius: 50%;
-    margin: 1.5rem;
-    background-color: white;
-    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
-    transition: all 0.35s ease;
-    cursor: pointer;
-
-    &:hover {
-      box-shadow: 0 0px 10px rgba(0, 0, 0, 0.5);
-    }
-
-    &:active {
-      box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
-    }
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    padding: 0;
+    margin: 0;
 }
 
 .sidebarOpened{
@@ -141,37 +115,3 @@
     }
 }
   
-
-
-@media (max-width: 1050px) {
-    
-    .container{
-        width: 50%;
-    }
-}
-
-@media (max-width: 950px) {
-    
-    .container{
-        width: 65%;
-    }
-}
-
-@media (max-width: 750px) {
-    
-    .container{
-        width: 70%;
-    }
-}
-
-@media (max-width: 550px) {
-    
-    .container{
-        width: 100%;
-    }
-
-    .advice{
-        font-size: .8rem;
-        overflow-wrap: break-word;
-    }
-}

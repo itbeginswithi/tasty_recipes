@@ -8,6 +8,7 @@ import {IoMdExit} from 'react-icons/io';
 import classes from './Header.module.scss';
 import { getRecipes } from '../../api/recipes';
 import { setRecipes, setFetchingRecipes } from '../../store/recipesSlice';
+import { toggleSidebarIsOpen } from '../../store/sidebarSlice';
 
 const Header = () => {
   const [showUserOptions, setShowUserOptions] = useState(false);
@@ -35,6 +36,10 @@ const Header = () => {
     }
   }
 
+  const toggleSidebar = (toggle) => {
+    dispatch(toggleSidebarIsOpen());
+  }
+
   return (
     <div className={classes.container}>
       <Link to="/" className={classes.logo}>
@@ -58,7 +63,7 @@ const Header = () => {
         { true ?
           (
             <div className={classes.user_account}>
-              <button type="button" className={classes.favories}>
+              <button type="button" className={classes.favories} onClick={() => toggleSidebar()}>
                 <BsFillBookmarkHeartFill/>
               </button>
               <div className={classes.userProfile} onClick={() => setShowUserOptions(prevState => !prevState)}>
@@ -78,7 +83,7 @@ const Header = () => {
                 {showUserOptions &&   
                   (
                     <ul className={classes.menu}>
-                      <li className={`${classes.menu_item} ${classes.fav}`}>
+                      <li className={`${classes.menu_item} ${classes.fav}`} onClick={() => toggleSidebar()}>
                         <BsFillBookmarkHeartFill/> Saved
                         </li>
                       <li className={classes.menu_item}>

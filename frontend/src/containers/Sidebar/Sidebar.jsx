@@ -1,18 +1,28 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import Lottie from 'react-lottie';
-// import { MdDelete } from "react-icons/md";
-// import { MdOutlineContentCopy } from "react-icons/md";
-import { FiChevronRight } from "react-icons/fi";
+import {useDispatch} from 'react-redux';
 
-
-import classes from './Sidebar.module.scss';
-// import { useBookmarkContext } from '../../context/contextProvider';
-import noDataAnimation from '../../animations/89841-no-records-found.json';
 import './keyframes.scss';
+import classes from './Sidebar.module.scss';
+import noDataAnimation from '../../animations/89841-no-records-found.json';
+import RecipeItem from './recipeItem/recipeItem';
+import {setSidebarIsOpen} from '../../store/sidebarSlice';
 
-const Sidebar = ({isOpen, setIsOpen}) => {
-  // const {toggleFav, increment, advice} = useBookmarkContext();
+const RECIPE_LIST = [
+  {
+    label: 'pizza',
+    imageUrl: 'https://source.unsplash.com/700x500/?pizza',
+    cuisineType: ['Mexican'],
+    calories: 650,
+    totalWeight: 450,
+    totalTime: 60,
+    servings: 6
+  },
+]
+
+const Sidebar = () => {
   const [favourites, setFavourites] = useState([]);
+  const dispatch = useDispatch();
 
   const animationOptions = { 
     loop: false,
@@ -25,25 +35,23 @@ const Sidebar = ({isOpen, setIsOpen}) => {
 
   return (
       <div className={classes.container}>
-        <button className={classes.close} type="button" onClick={() => setIsOpen(false)}><FiChevronRight/></button>
+        <div className={classes.sidebar__fullbg} onClick={() => dispatch(setSidebarIsOpen(false))} />
+
         <div className={classes.sidebar__container}>
-          <ul className={classes.sidebar}>
+          <ul className={RECIPE_LIST < 0 ? classes.sidebar : classes.recipeList}>
             {
-              favourites.map((advice, index) => (
-                <li className={classes.advice} key={index}>
-                     {/* Recipe Div Goes Here */}
-                </li>
+              RECIPE_LIST.map((recipe, index) => (
+                <RecipeItem recipe={recipe} key={index} singleRecipe={RECIPE_LIST.length < 2}/>
               ))
             }
-
-            {/* Display a lottie animation if no advice is saved */}
-            {!favourites.length &&  (
-                <div style={{height: '100%' ,display: 'flex', justifyContent: 'center', alignItems: "center"}}> 
+          </ul>
+            {/* Display a lottie animation if no recipe is saved */}
+            {!RECIPE_LIST.length &&  (
+                <div className={classes.lottieContainer}> 
                   <Lottie  options={animationOptions} width={'25rem'} height="auto"/>
                 </div>
               )
             }
-          </ul>
         </div>
       </div>
   )

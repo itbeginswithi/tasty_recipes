@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { GiKitchenScale } from "react-icons/gi";
 import { ImCalculator } from "react-icons/im";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { TbToolsKitchen2 } from "react-icons/tb";
 import { MdThumbUpOffAlt, MdThumbUp, MdOutlineTimer } from "react-icons/md";
 import {Link} from 'react-router-dom';
 
 import classes from "./RecipeItem.module.scss";
+import FavBtn from "../FavBtn/FavBtn";
 
 const RecipeItem = ({
   imageUrl,
@@ -20,8 +20,6 @@ const RecipeItem = ({
   totalTime,
   addedToFav
 }) => {
-
-  const [favorite, setFavorite] = useState(false);
   const [liked, setLiked] = useState(false);
 
   const recipeId = label?.toLowerCase().split(' ').join('-');
@@ -88,14 +86,8 @@ const RecipeItem = ({
                 <MdThumbUpOffAlt onClick={() => setLiked(true)}/>
               }
           </button>
-          <button type="button" className={`${classes.actions_btn}`}>
-            {favorite ?  
-              <AiFillHeart className={classes.btn_fav} onClick={() => setFavorite(false)} title="Remove" /> 
-              : 
-              <AiOutlineHeart className={classes.btn_outlineFav} onClick={() => setFavorite(true)}/>
-            }
-          </button>
 
+          <FavBtn addedToFav={addedToFav}/>
         </div>
     </div>
   );
