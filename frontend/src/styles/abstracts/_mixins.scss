@@ -1,3 +1,11 @@
+@mixin flex($direction: row, $align: start, $justify: start, $gap: 1rem){
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+    gap: $gap;
+}
+
 @mixin user-select {
     user-select: none;
 }

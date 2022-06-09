@@ -1,6 +1,7 @@
-import React, { useState} from 'react'
+import React, { useState} from 'react';
 import Lottie from 'react-lottie';
 import {useDispatch} from 'react-redux';
+import { CgClose } from 'react-icons/cg';
 
 import './keyframes.scss';
 import classes from './Sidebar.module.scss';
@@ -16,7 +17,18 @@ const RECIPE_LIST = [
     calories: 650,
     totalWeight: 450,
     totalTime: 60,
-    servings: 6
+    servings: 6,
+    addedToFav: true
+  },
+  {
+    label: 'pizza',
+    imageUrl: 'https://source.unsplash.com/700x500/?tacos',
+    cuisineType: ['Mexican'],
+    calories: 650,
+    totalWeight: 450,
+    totalTime: 60,
+    servings: 6,
+    addedToFav: true
   },
 ]
 
@@ -39,6 +51,14 @@ const Sidebar = () => {
 
         <div className={classes.sidebar__container}>
           <ul className={RECIPE_LIST < 0 ? classes.sidebar : classes.recipeList}>
+            <div className={classes.controllers}>
+              <span className={classes.list_length}>
+                <strong>{RECIPE_LIST.length}</strong> {RECIPE_LIST.length === 1 ? 'recipe' : 'recipes'}
+              </span>
+              <div className={classes.controllers__btn} onClick={() => dispatch(setSidebarIsOpen(false))}>
+                <CgClose/>
+              </div>
+            </div>
             {
               RECIPE_LIST.map((recipe, index) => (
                 <RecipeItem recipe={recipe} key={index} singleRecipe={RECIPE_LIST.length < 2}/>
