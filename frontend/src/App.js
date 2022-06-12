@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CSSTransition from "react-transition-group/CSSTransition";
 
-import { Header } from './components';
+import { Header, Footer } from './components';
 import { Homepage, RecipeDetail, Sidebar } from './containers'; 
 import './containers/Sidebar/keyframes.scss';
 
@@ -37,6 +37,7 @@ const App = () => {
         <Route exact path="/recipe/:id" element={<RecipeDetail/>}/>
         <Route path="*" element={<Homepage/>}/>
       </Routes>
+      <Footer/>
     </Router>
   );
 }
