@@ -7,7 +7,7 @@ import {IoMdExit} from 'react-icons/io';
 
 import classes from './Header.module.scss';
 import { getRecipes } from '../../api/recipes';
-import { setRecipes, setFetchingRecipes } from '../../store/recipesSlice';
+import { setRecipes, setFetchingRecipes, setRecipesFound, setError } from '../../store/recipesSlice';
 import { toggleSidebarIsOpen } from '../../store/sidebarSlice';
 
 const Header = () => {
@@ -29,8 +29,24 @@ const Header = () => {
     dispatch(setFetchingRecipes(true));
 
     const recipes = await getRecipes(query);
+
+    dispatch(setFetchingRecipes(false));
+    
+    //api conenction error
+    if(recipes === undefined){
+      dispatch(setError(true));
+      return;
+    }
+
+    if(!recipes.length){
+      dispatch(setRecipesFound(false));
+      dispatch(setError(false));
+      return;
+    }
+    
     if(typeof recipes === 'object'){
-      dispatch(setFetchingRecipes(false));
+      dispatch(setError(false));
+      dispatch(setRecipesFound(true));
       dispatch(setRecipes({recipes}));
       return;
     }

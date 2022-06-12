@@ -13,10 +13,8 @@ const App = () => {
   useEffect(() => {
     if(isOpen){
       document.body.style.overflowY = "hidden";
-      console.log('isOpen');
     }else{
       document.body.style.overflowY = "scroll";
-      console.log('isCLosed');
     }
   }, [isOpen])
 

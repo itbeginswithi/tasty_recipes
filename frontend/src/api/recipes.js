@@ -17,6 +17,7 @@ export const getRecipes = async (query) => {
           
         //hits: [{}, {}, {}]
         const {data: {hits}} = await axios.request(options);
+        console.log(hits);
         return hits;
 
       } catch (error) {

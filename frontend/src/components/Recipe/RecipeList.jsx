@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import classes from './RecipeList.module.scss';
 import RecipeItem from './RecipeItem';
+import Error from '../Error/Error';
 
 
 const LoadingRecipes = () => (
@@ -15,61 +16,26 @@ const LoadingRecipes = () => (
   </div>
 )
 
-const RECIPE_LIST = [
-  {
-    imageUrl: 'https://source.unsplash.com/850x900/?tacos',
-    label: 'Crisp Tacos Picadillo',
-    source: 'Lottie + Doof',
-    healthLabels: ['Peanut-Free', "Tree-Nut-Free", "Alcohol-Free", "Sulfite-Free"],
-    servings: '16',
-    calories: 2552.4187824,
-    totalWeight: 1542.04,
-    totalTime: 25  
-  },
-  {
-    imageUrl: 'https://source.unsplash.com/1001x900/?tacos',
-    label: "Picadillo Tacos",
-    source: 'Lottie + Doof',
-    sourceUrl: "http://honestcooking.com/picadillo-tacos-recipe/",
-    healthLabels: ['Peanut-Free', "Tree-Nut-Free", "Alcohol-Free", "Sulfite-Free"],
-    servings: '4',
-    calories: 2552.4187824,
-    totalWeight: 1542.04,
-    totalTime: 0 
-  },
-  {
-    imageUrl: 'https://source.unsplash.com/900x900/?tacos',
-    label: "Carnitas tenderloin tacos",
-    source: "Food52",
-    sourceUrl: "https://food52.com/recipes/73841-carnitas-tenderloin-tacos",
-    healthLabels: ["Peanut-Free", "Tree-Nut-Free", "Alcohol-Free"],
-    servings: '2',
-    calories: 2552.4187824,
-    totalWeight: 0,
-    totalTime: 25 
-  },
-  {
-    imageUrl: 'https://source.unsplash.com/1000x900/?tacos',
-    label: "Salmon tacos with lime dressing",
-    source: "BBC Good Food",
-    sourceUrl: "https://www.bbcgoodfood.com/recipes/salmon-tacos-lime-dressing",
-    healthLabels: ["Pescatarian", "Mediterranean", "Peanut-Free", "Tree-Nut-Free", "Alcohol-Free","Sulfite-Free"],
-    servings: '4',
-    calories: 0,
-    totalWeight: 1542.04,
-    totalTime: 25 
-  },
-]
-
 const RecipeList = () => {
   
-  const { fetchingRecipes, recipes } = useSelector(state => state.recipes);
-
+  const { fetchingRecipes, recipes, recipesFound, error } = useSelector(state => state.recipes);
+ 
   return (
     <div className={classes.flex}>
-      {fetchingRecipes && [1, 2, 3, 4].map((_, i) => (
-        <LoadingRecipes key={i}/>
-      ))}
+      {
+        fetchingRecipes && [1, 2, 3, 4].map((_, i) => (
+          <LoadingRecipes key={i}/>
+        ))
+      }
+
+      {
+        ((!recipesFound && !fetchingRecipes) || error) && (
+          <Error 
+            msg={error ? "Error 500 : A server error occured" : "No recipes found, try other search keywords"} 
+            error={error}
+          />
+        )
+      }
 
       {(recipes && !fetchingRecipes) && recipes.map(({recipe}, i) => (
         <RecipeItem 
