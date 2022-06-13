@@ -108,7 +108,7 @@ const Header = () => {
                         <BsFillBookmarkHeartFill/> Saved
                         </li>
                       <li className={classes.menu_item}>
-                        <Link to={'/setting'}>
+                        <Link to={'/settings'}>
                           <FiSettings/> Settings
                         </Link>
                       </li>

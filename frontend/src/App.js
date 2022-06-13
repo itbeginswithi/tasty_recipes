@@ -35,7 +35,7 @@ const App = () => {
       </CSSTransition>
       <Routes>
         <Route exact path="/recipe/:id" element={<RecipeDetail/>}/>
-        <Route path="/settings" element={<Settings/>}/>
+        <Route exact path="/settings" element={<Settings/>}/>
         <Route path="*" element={<Homepage/>}/>
       </Routes>
       <Footer/>
