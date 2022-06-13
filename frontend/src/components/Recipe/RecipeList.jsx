@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import classes from './RecipeList.module.scss';
 import RecipeItem from './RecipeItem';
 import Error from '../Error/Error';
+import Intro from '../Intro/Intro';
 
 
 const LoadingRecipes = () => (
@@ -20,6 +21,21 @@ const RecipeList = () => {
   
   const { fetchingRecipes, recipes, recipesFound, error } = useSelector(state => state.recipes);
  
+  if(!recipes.length && !fetchingRecipes && !error){
+    return (
+      <Intro />
+    )
+  }
+
+  if((!recipesFound && !fetchingRecipes) || error){
+    return (
+      <Error 
+            msg={error ? "Error 500 : A server error occured" : "No recipes found, try other search keywords"} 
+            error={error}
+      />
+    )
+  }
+
   return (
     <div className={classes.flex}>
       {
@@ -28,14 +44,6 @@ const RecipeList = () => {
         ))
       }
 
-      {
-        ((!recipesFound && !fetchingRecipes) || error) && (
-          <Error 
-            msg={error ? "Error 500 : A server error occured" : "No recipes found, try other search keywords"} 
-            error={error}
-          />
-        )
-      }
 
       {(recipes && !fetchingRecipes) && recipes.map(({recipe}, i) => (
         <RecipeItem 
