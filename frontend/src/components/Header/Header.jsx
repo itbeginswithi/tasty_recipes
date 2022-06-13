@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { useDispatch } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
 import {BsSearch, BsFillBookmarkHeartFill} from 'react-icons/bs';
+import { FiSettings } from 'react-icons/fi';
 import {RiArrowDropDownLine, RiArrowDropUpLine, RiUser6Line} from 'react-icons/ri';
 import {IoMdExit} from 'react-icons/io';
 
@@ -106,6 +107,11 @@ const Header = () => {
                       <li className={`${classes.menu_item} ${classes.fav}`} onClick={() => toggleSidebar()}>
                         <BsFillBookmarkHeartFill/> Saved
                         </li>
+                      <li className={classes.menu_item}>
+                        <Link to={'/setting'}>
+                          <FiSettings/> Settings
+                        </Link>
+                      </li>
                       <li className={classes.menu_item}>
                         <IoMdExit/> Logout
                         </li>
