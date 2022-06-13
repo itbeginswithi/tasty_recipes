@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import CSSTransition from "react-transition-group/CSSTransition";
 
 import { Header, Footer } from './components';
-import { Homepage, RecipeDetail, Sidebar } from './containers'; 
+import { Homepage, RecipeDetail, Settings, Sidebar } from './containers'; 
 import './containers/Sidebar/keyframes.scss';
 
 const App = () => {
@@ -35,6 +35,7 @@ const App = () => {
       </CSSTransition>
       <Routes>
         <Route exact path="/recipe/:id" element={<RecipeDetail/>}/>
+        <Route path="/settings" element={<Settings/>}/>
         <Route path="*" element={<Homepage/>}/>
       </Routes>
       <Footer/>
