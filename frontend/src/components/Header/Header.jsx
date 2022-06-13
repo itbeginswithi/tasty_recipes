@@ -10,6 +10,7 @@ import classes from './Header.module.scss';
 import { getRecipes } from '../../api/recipes';
 import { setRecipes, setFetchingRecipes, setRecipesFound, setError } from '../../store/recipesSlice';
 import { toggleSidebarIsOpen } from '../../store/sidebarSlice';
+import {images} from '../../images';
 
 const Header = () => {
   const [showUserOptions, setShowUserOptions] = useState(false);
@@ -65,7 +66,9 @@ const Header = () => {
 
   return (
     <div className={classes.container}>
-      <Link to="/" className={classes.logo} onClick={() => clearRecipeObj()}/>
+      <Link to="/" className={classes.logo} onClick={() => clearRecipeObj()}>
+        <img src={images.Logo} alt="herushii-logo"/>
+      </Link>
 
       <div className={classes.search}>
         <input 
