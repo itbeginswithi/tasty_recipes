@@ -2,21 +2,62 @@ import React from 'react';
 import Lottie from 'react-lottie';
 
 import classes from './Error.module.scss';
-import { NotFound } from '../../animations';
+import { NotFound, noRecordsFound, ServerError } from '../../animations';
 
-const Error = ({msg, error}) => {
+const Error = ({msg, error, notFound, serverError}) => {
+  const ServerErrorAnimation =  { 
+    loop: true,
+    autoPlay: true,
+    animationData: ServerError,
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+    }
+  }
+
   const NotFoundAnimation =  { 
-    loop: false,
-    autoPlay: false,
+    loop: true,
+    autoPlay: true,
     animationData: NotFound,
     rendererSettings: {
         preserveAspectRatio: 'xMidYMid slice'
     }
-}
+  }
+
+  const NoRecordsFoundAnimation =  { 
+    loop: true,
+    autoPlay: true,
+    animationData: noRecordsFound,
+    rendererSettings: {
+        preserveAspectRatio: 'xMidYMid slice'
+    }
+  }
 
   return (
     <div className={classes.container}>
-        {notFound && <Lottie options={NotFoundAnimation}/>}
+        {serverError && !notFound &&
+          <Lottie 
+            options={ServerErrorAnimation} 
+            isClickToPauseDisabled={true}
+            width="auto" 
+            height="auto"
+          />
+        }
+        {notFound && !serverError &&
+          <Lottie 
+            options={NotFoundAnimation} 
+            isClickToPauseDisabled={true}
+            width="auto" 
+            height="auto"
+          />
+        }
+        {noRecordsFound && !serverError &&
+          <Lottie 
+            options={NoRecordsFoundAnimation} 
+            isClickToPauseDisabled={true}
+            width="auto" 
+            height="auto"
+          />
+        }
         <h2 className={error && classes.error}>{msg}</h2>
     </div>
   )

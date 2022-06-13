@@ -20,16 +20,18 @@ const LoadingRecipes = () => (
 const RecipeList = () => {
   
   const { fetchingRecipes, recipes, recipesFound, error } = useSelector(state => state.recipes);
- 
-  if(!recipes.length && !fetchingRecipes && !error){
+
+  if(!recipes.length && recipesFound && !fetchingRecipes && !error){
     return (
-      <Intro />
+      <Intro /> 
     )
   }
 
   if((!recipesFound && !fetchingRecipes) || error){
     return (
       <Error 
+            noRecordsFound={!error}
+            serverError={error}
             msg={error ? "Error 500 : A server error occured" : "No recipes found, try other search keywords"} 
             error={error}
       />

@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import Error from '../../components/Error/Error';
 
 const RecipeDetail = () => {
   const { recipes } =  useSelector(state => state.recipes);
@@ -8,6 +9,7 @@ const RecipeDetail = () => {
 
   const location = useLocation();
   const recipeLabel = location.pathname.split('/')[2].split('-').join(' ');
+  const recipeFound = true;
 
   let recipeRef = useRef();
   let recipe = recipeRef?.current?.recipe;
@@ -19,6 +21,12 @@ const RecipeDetail = () => {
       recipeRef.current =  recipes.find(({recipe}) => recipe.label.toLowerCase() === recipeLabel);
     }
   }, [recipeLabel]);
+
+  //add logic to check whether recipe exists or not
+  //if it doesn't show this Error
+  if(!recipeFound) {
+    return (<Error msg="Oops! This link has no recipe details to display." notFound/>)
+  }
 
   return (
     <div>
