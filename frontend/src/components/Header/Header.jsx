@@ -56,16 +56,20 @@ const Header = () => {
     dispatch(toggleSidebarIsOpen());
   }
 
+  const clearRecipeObj = () => {
+    dispatch(setError(false));
+    dispatch(setRecipesFound(true));
+    dispatch(setRecipes({recipes: []}));      
+  }
+
   return (
     <div className={classes.container}>
-      <Link to="/" className={classes.logo}>
-
-      </Link>
+      <Link to="/" className={classes.logo} onClick={() => clearRecipeObj()}/>
 
       <div className={classes.search}>
         <input 
           className={classes.search_input}
-          type="text" 
+          type="text"   
           name="search" 
           autoComplete="off" 
           placeholder="Search for a recipe.."
