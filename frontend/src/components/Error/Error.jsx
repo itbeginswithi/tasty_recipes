@@ -24,7 +24,7 @@ const Error = ({msg, error, notFound, serverError}) => {
   }
 
   const NoRecordsFoundAnimation =  { 
-    loop: true,
+    loop: false,
     autoPlay: true,
     animationData: noRecordsFound,
     rendererSettings: {
@@ -42,7 +42,7 @@ const Error = ({msg, error, notFound, serverError}) => {
             height="auto"
           />
         }
-        {notFound && !serverError &&
+        {!notFound && !serverError &&
           <Lottie 
             options={NotFoundAnimation} 
             isClickToPauseDisabled={true}
@@ -50,7 +50,7 @@ const Error = ({msg, error, notFound, serverError}) => {
             height="auto"
           />
         }
-        {noRecordsFound && !serverError &&
+        {notFound && noRecordsFound && !serverError &&
           <Lottie 
             options={NoRecordsFoundAnimation} 
             isClickToPauseDisabled={true}

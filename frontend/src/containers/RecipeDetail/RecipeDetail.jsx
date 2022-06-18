@@ -9,7 +9,7 @@ const RecipeDetail = () => {
 
   const location = useLocation();
   const recipeLabel = location.pathname.split('/')[2].split('-').join(' ');
-  const recipeFound = true;
+  const recipeFound = false;
 
   let recipeRef = useRef();
   let recipe = recipeRef?.current?.recipe;
