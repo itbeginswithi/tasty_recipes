@@ -1,28 +1,30 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
 
-import userRoutes from './routes/users.js';
-
-const app = express();
+const bodyParser = require('body-parser');
+const express= require('express')
+const app=express()
+const mongoose= require('mongoose')
+const dotenv= require('dotenv')
+const routersUrls = require('./routes/users.js')
+const routersBookmarks = require('./routes/bookmarks.js')
+const routersRecipes = require('./routes/recipes.js')
+const cors= require('cors')
 dotenv.config()
 
-const PORT = process.env.PORT || 4000;  
-const CONNECTION_URL = `${process.env.CONNECTION_URL}` 
-
-//to properly send reqs
 app.use(bodyParser.json({limit : '30mb', extended: true}));
 app.use(bodyParser.urlencoded({limit : '30mb', extended: true}));
+app.use(cors())
+app.use(express.json())
+app.use('/app',routersUrls)
+app.use('/book',routersBookmarks)
+app.use('/rec',routersRecipes)
 
-app.use(cors());
+mongoose
+    .connect(
+        process.env.BD_connect,() =>
+        console.log("database connected "));
 
-app.use('/users', userRoutes)
+app.use(express.json())
 
-mongoose.connect(CONNECTION_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => app.listen(PORT, () => console.log(`Server listening on ${PORT}`) ))
-.catch(error => console.error(error))
+app.listen(process.env.PORT || 3000 ,() => 
+ console.log("server is running"));
+
