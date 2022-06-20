@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const Recipes = require('../models/recipes.js');
 
-router.get("/kh", async (req, res) => {
+router.get("/", async (req, res) => {
+    res.json({"msg": "Works wonderfuly"})
     console.log('la vie est tres simple');
     });
 
