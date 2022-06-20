@@ -1,0 +1,168 @@
+@import "../../styles/abstracts/all";
+
+.mustapha {
+
+   
+
+ 
+
+  text-align: center;  
+  background-image: linear-gradient(70deg, #F0FFFF 0%, 	7FFFD4	 100%);
+ 
+  .image {
+
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 10px -12px rgba(0, 0, 0, 0.79);
+    // margin: 1rem 0;
+    display: block;
+    margin-left: 10;
+    margin-right: 10;
+   
+    
+  //   min-width: 100rem;
+  // max-width: 100rem;
+ 
+
+   
+  }
+  .title{
+    opacity: 0.8;
+    border-radius: 20px;
+    // box-shadow: 0px 5px 20px rgb(60, 219, 219);
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    background: rgb(149, 188, 240); 
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    
+    min-width: 100rem;
+  max-width: 100rem;
+  font-size: 3.7rem;
+      font-family: "Times New Roman", Times, serif;
+  }
+  .info {
+    padding: 1rem;
+ 
+
+   
+
+    
+    & .healthLabels {
+      display: inline;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-items: center;
+     
+      gap: 0.5rem;
+      margin: 1.5rem 0 1rem;
+
+      &__tag {
+        padding: 1rem;
+        background-color: whitesmoke;
+        border-radius: 5rem;
+        font-family: Roboto;
+        align-items: center;
+        font-weight: 500;
+        font-size: 2 rem;
+        cursor: pointer;
+        @include user-select;
+
+        background-color: rgba(#10ec43, .4);
+        transition: all .2s linear;
+        
+        &:hover{
+          box-shadow: 0px 0px 5px 0px rgba(#10ec43, .4);
+        }
+      }
+    }
+     .healthNumbers {
+      display: flex;
+      text-align: center;
+      align-items: center;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+     
+      
+      &_item {
+        display: flex;
+        // align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        font-size: 1.2rem;
+        font-weight: 500;
+        
+
+
+        & svg {
+          font-size: 1.7rem;
+        }
+      }
+    
+    }
+    .ingred{
+      // display: flex;
+      // text-align: center;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      font-size: 2rem;
+      font-family: Arial , serif;
+      color:rgb(5, 5, 5);
+      list-style: square;
+
+    }
+
+  }
+
+
+
+  //Action buttons
+
+  & .actions{
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding: 1rem;
+
+      height:10px ;
+      &_btn{
+        min-width: 3rem;
+        min-height: 3rem;
+        border: none;
+        background-color: transparent;
+        border-radius: 5rem;
+       
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        
+        & svg{
+          font-size: 2rem;
+        }
+      }
+    }
+    
+    & .btn_fav {
+      color: rgb(255, 122, 145);
+     
+    }   
+    
+    & .btn_outlineFav{
+    transition: all .1s linear;
+    &:hover{
+      color: rgb(255, 122, 145);
+    }
+  
+ }
+}
