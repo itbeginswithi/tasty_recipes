@@ -2,25 +2,23 @@ const express = require('express')
 const router = express.Router()
 const Recipes = require('../models/recipes.js');
 
-router.get("/", async (req, res) => {
-    res.json({"msg": "Works wonderfuly"})
+router.get("/kh", async (req, res) => {
     console.log('la vie est tres simple');
+    res.json({"msg":"khalidovic"});
     });
 
 
       // add recipes
 
 router.post('/addRecipes', async (req, resp) => {
-    const { heathLabel, totalTime, totalWeight, calories, cuisineType, ingredients, cautions } = req.body;
+    const { calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabel, 
+      image, ingredientLines, ingredients, label, mealType, shareAs, source,
+       totalDaily, totalNutrients, totalTime, totalWeight  } = req.body;
      
         const saveRecipes = new Recipes({
-            heathLabel,
-            totalTime, 
-            totalWeight, 
-            calories,
-            cuisineType, 
-            ingredients,
-            cautions,
+          calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabel, 
+          image, ingredientLines, ingredients, label, mealType, shareAs, source,
+           totalDaily, totalNutrients, totalTime, totalWeight
              })
             
             saveRecipes.save()   
@@ -28,14 +26,26 @@ router.post('/addRecipes', async (req, resp) => {
             resp.json(data)
 
             resp.status(200).json({
-                heathLabel: req.body.heathLabel,
-                totalTime: req.body.totalTime,
-                totalWeight: req.body.totalWeight,
-                calories: req.body.calories,
-                cuisineType: req.body.cuisineType,
-                ingredients: req.body.ingredients,
-                cautions: req.body.cautions
-                });
+              calories: req.body.calories,
+              cautions: req.body.cautions,
+              cuisineType: req.body.cuisineType,
+              dietLabels: req.body.dietLabels,
+              digest: req.body.digest,
+              dishType: req.body.dishType,
+              heathLabel: req.body.heathLabel,
+              image: req.body.image,
+              ingredientLines: req.body.ingredientLines,
+              ingredients: req.body.ingredients,
+              label: req.body.label,
+              mealType: req.body.mealType,
+              shareAs: req.body.shareAs,
+              source: req.body.source,
+              totalDaily: req.body.totalDaily,
+              totalNutrients: req.body.totalNutrients,
+              totalTime: req.body.totalTime,
+              totalWeight: req.body.totalWeight
+
+              });
         })
         .catch(error =>{
             resp.json(error)

@@ -20,6 +20,15 @@ module.exports = {
       cautions: Joi.string()
     });
     return schema.validate(recipes);
+  },
+
+  bookmarks: (bookmarks) => {
+    const schema = Joi.object({
+      userId: Joi.objectId().allow(""),
+      recipesId: Joi.objectId().allow(""),
+    });
+    
+    return schema.validate(bookmarks);
   }
 
 

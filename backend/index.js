@@ -18,13 +18,14 @@ app.use(express.json())
 app.use('/app',routersUrls)
 app.use('/book',routersBookmarks)
 app.use('/rec',routersRecipes)
-app.use(express.json())
 
 mongoose
     .connect(
         process.env.BD_connect,() =>
         console.log("database connected "));
 
+app.use(express.json())
 
 app.listen(process.env.PORT || 3000 ,() => 
  console.log("server is running"));
+

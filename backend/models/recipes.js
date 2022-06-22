@@ -1,41 +1,45 @@
 const mongoose=require('mongoose')
 const RecipesSchema=new mongoose.Schema({
 
-  heathLabel:{
-     type:String,
-      // required :true 
-    },
+  calories:{ type:Number },
 
-  totalTime:{
-    type:String,
-    // required :true
-  },
+  cautions:{ type:Array },
 
-  totalWeight:{
-    type:String,
-    // required :true
-  },
+  cuisineType:{ type:String },
 
-  calories:{
-     type:String,
-    //  required :true
-     },
+  dietLabels:{ type:String },
 
-  cuisineType:{
-    type:String,
-    // required :true 
-  },
+  digest:{ type:Array  },
 
-  ingredients:{ 
-    type:String,
-    // required :true 
-  },
-  cautions:{ 
-    type:String,
-    // required :true 
-  }
+  dishType:{ type:String  },
+
+  heathLabel:{  type:String },
+
+  image:{ type:String },
+
+  ingredientLines:{ type:Array },
+
+  ingredients:{  type:Array},
+
+  label:{  type:String },
+
+  mealType:{  type:Array },
+
+  shareAs:{  type:String },
+
+  source:{  type:String },
+
+  totalDaily:{  type:Array },
+
+  totalNutrients:{  type:Array },
+
+  totalTime:{  type:Number },
+
+  totalWeight:{  type:Number }
+
+  
+  
 
 })
-
 
 module.exports=mongoose.model('Recipes',RecipesSchema)
