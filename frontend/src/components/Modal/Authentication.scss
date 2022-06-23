@@ -1,0 +1,109 @@
+#canvas1{
+    display: flex;
+     justify-content: center;
+    position: absolute;
+    width: 436px;
+    top: 50px;
+    height: 546px;
+    left: 382px;
+    background: #0e0d0d;
+    border:1px solid #000000
+    
+    }
+    #canvas2{
+    border:1px solid #000000;
+     position: absolute;
+    width: 440px;
+    height: 530px;
+    top: 50px;
+    left: 360px;
+    background: #FFFFFF;
+    
+        }
+        h4 {
+          display: block;
+          margin-block-start: 1.33em;
+          margin-block-end: 1.33em;
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-weight: bold;
+      }
+      .title1 {
+        font-style: normal;
+        font-weight: normal;
+        font-size: normal;
+        line-height: 42px;
+        
+        text-align: center;
+        
+        }
+        #hamid{
+      position: absolute;
+      left: 26px;
+      top: 40px;
+      width: 100%;
+      height: 100%;
+      background:#C4C4C4;
+  }
+       
+   #input1{
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    box-shadow: #373737 2px 5px 2px;
+        border-radius: 4px;
+    
+        }
+         #input2{
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    margin-top: 38PX;
+    box-shadow: #373737 2px 5px 2px;
+        border-radius: 4px;
+    
+        }
+      #input3{
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    margin-top: 38PX;
+    box-shadow: #373737 2px 5px 2px;
+      border-radius: 4px;
+    
+        }
+      
+      #button1{
+        background-color: rgb(235, 174, 186);
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    margin-top: 38PX;
+    box-shadow: #373737 2px 5px 2px;
+    border-radius: 4px;
+    font-weight: bold;
+    
+        }
+      
+        
+   
+      .imgEmail{
+          background-image: url("../../images/Email.png");
+          background-repeat: no-repeat;
+      }
+    .imgPASS{
+          background-image: url("../../images/Key.png");
+          background-repeat: no-repeat;
+  
+      }
+      .imgcompte{
+          background-image: url("../../images/Account .png");
+          background-repeat: no-repeat;
+      }
+      .imggoogle{
+          background-image: url("../../images/google.png");
+          background-repeat: no-repeat;
+         
+    }
+     
+  

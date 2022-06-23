@@ -1,24 +1,33 @@
 import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
 import {BsSearch, BsFillBookmarkHeartFill} from 'react-icons/bs';
-import { FiSettings } from 'react-icons/fi';
 import {RiArrowDropDownLine, RiArrowDropUpLine, RiUser6Line} from 'react-icons/ri';
 import {IoMdExit} from 'react-icons/io';
 
 import classes from './Header.module.scss';
 import { getRecipes } from '../../api/recipes';
-import { setRecipes, setFetchingRecipes, setRecipesFound, setError } from '../../store/recipesSlice';
-import { toggleSidebarIsOpen } from '../../store/sidebarSlice';
-import {images} from '../../images';
-
+import { setRecipes, setFetchingRecipes } from '../../store/recipesSlice';
+import {  setShowModal } from '../../store/authSlice';
+import { setIsSignedIn, setShowModal1 } from '../../store/authenticationSlice';
 const Header = () => {
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [query, setQuery] = useState('');
   const [prevQuery, setPrevQuery] = useState('');
+  const username = localStorage.getItem('username');
+  const {isSignedIn} = useSelector(state => state.authentication);
+  
+  
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('username');
+   localStorage.removeItem('userId');
+    dispatch (setIsSignedIn(false));
+}
 
   const fetchRecipes = async (query) => {
     navigate('/');
@@ -26,54 +35,33 @@ const Header = () => {
     if(query === prevQuery || query === '') {
       return;
     }
+
     
     setPrevQuery(query);
     dispatch(setFetchingRecipes(true));
 
     const recipes = await getRecipes(query);
-
-    dispatch(setFetchingRecipes(false));
-    
-    //api conenction error
-    if(recipes === undefined){
-      dispatch(setError(true));
-      return;
-    }
-
-    if(!recipes.length){
-      dispatch(setRecipesFound(false));
-      dispatch(setError(false));
-      return;
-    }
     
     if(typeof recipes === 'object'){
-      dispatch(setError(false));
-      dispatch(setRecipesFound(true));
+      dispatch(setFetchingRecipes(false));
       dispatch(setRecipes({recipes}));
       return;
     }
   }
-
-  const toggleSidebar = (toggle) => {
-    dispatch(toggleSidebarIsOpen());
-  }
-
-  const clearRecipeObj = () => {
-    dispatch(setError(false));
-    dispatch(setRecipesFound(true));
-    dispatch(setRecipes({recipes: []}));      
-  }
-
+  
+  const toggleAuthModal = (state) => dispatch(setShowModal(state));
+  const toggleAuthModal1 = (state) => dispatch(setShowModal1(state));
   return (
-    <div className={classes.container}>
-      <Link to="/" className={classes.logo} onClick={() => clearRecipeObj()}>
-        <img src={images.Logo} alt="herushii-logo"/>
-      </Link>
+  
+    
+      <div className={classes.container}>
+      <Link to="/" className={classes.logo}>
 
+      </Link>
       <div className={classes.search}>
         <input 
           className={classes.search_input}
-          type="text"   
+          type="text" 
           name="search" 
           autoComplete="off" 
           placeholder="Search for a recipe.."
@@ -84,15 +72,15 @@ const Header = () => {
       </div>
 
       <div className={classes.user}>
-        { true ?
+        { isSignedIn ?
           (
             <div className={classes.user_account}>
-              <button type="button" className={classes.favories} onClick={() => toggleSidebar()}>
+              <button type="button" className={classes.favories}>
                 <BsFillBookmarkHeartFill/>
               </button>
               <div className={classes.userProfile} onClick={() => setShowUserOptions(prevState => !prevState)}>
                 <RiUser6Line className={classes.userProfile_icon}/>
-                <span className={classes.userProfile_name}>Username</span>
+                <span className={classes.userProfile_name}>  {username} </span>
                 {
                   showUserOptions ? 
                     (
@@ -107,17 +95,14 @@ const Header = () => {
                 {showUserOptions &&   
                   (
                     <ul className={classes.menu}>
-                      <li className={`${classes.menu_item} ${classes.fav}`} onClick={() => toggleSidebar()}>
+                      <li className={`${classes.menu_item} ${classes.fav}`}>
                         <BsFillBookmarkHeartFill/> Saved
                         </li>
-                      <li className={classes.menu_item}>
-                        <Link to={'/settings'}>
-                          <FiSettings/> Settings
-                        </Link>
-                      </li>
-                      <li className={classes.menu_item}>
+                      <li className={classes.menu_item}   onClick={logout}>
+
                         <IoMdExit/> Logout
                         </li>
+
                     </ul>
                   )
                 }
@@ -127,12 +112,13 @@ const Header = () => {
           :
           (
             <div className={classes.authentication}>
-              <button type="button" className={classes.authentication_login}>
+              <button type="button" onClick = {() => toggleAuthModal1(true) }  className={classes.authentication_login}>
                 Login
               </button>
-              <button type="button" className={classes.authentication_signup}>
+              <button type="button" onClick = {() => toggleAuthModal(true)} className={classes.authentication_signup} >
                 Signup
               </button>
+              
             </div>
           )
         }
