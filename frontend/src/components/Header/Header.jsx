@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link, useNavigate} from 'react-router-dom';
 import {BsSearch, BsFillBookmarkHeartFill} from 'react-icons/bs';
 import { FiSettings } from 'react-icons/fi';
@@ -9,13 +9,16 @@ import {IoMdExit} from 'react-icons/io';
 import classes from './Header.module.scss';
 import { getRecipes } from '../../api/recipes';
 import { setRecipes, setFetchingRecipes, setRecipesFound, setError } from '../../store/recipesSlice';
+import { setIsSignedIn, setModalIsOpen, setSignupForm } from '../../store/authSlice';
 import { toggleSidebarIsOpen } from '../../store/sidebarSlice';
 import {images} from '../../images';
 
 const Header = () => {
+  const { isSignedIn } = useSelector(state => state.auth);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [query, setQuery] = useState('');
   const [prevQuery, setPrevQuery] = useState('');
+  const username = localStorage.getItem('username');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,10 +67,16 @@ const Header = () => {
     dispatch(setRecipes({recipes: []}));      
   }
 
+  const logout = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    dispatch(setIsSignedIn(false))
+  }
+
   return (
     <div className={classes.container}>
       <Link to="/" className={classes.logo} onClick={() => clearRecipeObj()}>
-        <img src={images.Logo} alt="herushii-logo"/>
+        <img src={images.Logo} alt="herushii-logo" draggable="false"/>
       </Link>
 
       <div className={classes.search}>
@@ -84,7 +93,7 @@ const Header = () => {
       </div>
 
       <div className={classes.user}>
-        { true ?
+        { isSignedIn ?
           (
             <div className={classes.user_account}>
               <button type="button" className={classes.favories} onClick={() => toggleSidebar()}>
@@ -92,7 +101,7 @@ const Header = () => {
               </button>
               <div className={classes.userProfile} onClick={() => setShowUserOptions(prevState => !prevState)}>
                 <RiUser6Line className={classes.userProfile_icon}/>
-                <span className={classes.userProfile_name}>Username</span>
+                <span className={classes.userProfile_name}>{username && username}</span>
                 {
                   showUserOptions ? 
                     (
@@ -115,7 +124,7 @@ const Header = () => {
                           <FiSettings/> Settings
                         </Link>
                       </li>
-                      <li className={classes.menu_item}>
+                      <li className={classes.menu_item} onClick={logout}>
                         <IoMdExit/> Logout
                         </li>
                     </ul>
@@ -126,11 +135,11 @@ const Header = () => {
           )
           :
           (
-            <div className={classes.authentication}>
-              <button type="button" className={classes.authentication_login}>
+            <div className={classes.authentication}> 
+              <button type="button" className={classes.authentication_login} onClick={() => dispatch(setModalIsOpen(true), dispatch(setSignupForm(false)))}>
                 Login
               </button>
-              <button type="button" className={classes.authentication_signup}>
+              <button type="button" className={classes.authentication_signup} onClick={() => dispatch(setModalIsOpen(true), dispatch(setSignupForm(true)))}>
                 Signup
               </button>
             </div>

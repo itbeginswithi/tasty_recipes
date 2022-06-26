@@ -3,24 +3,26 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import CSSTransition from "react-transition-group/CSSTransition";
 
-import { Header, Footer } from './components';
+import { Header, Footer, Authentication } from './components';
 import { Homepage, RecipeDetail, Settings, Sidebar } from './containers'; 
 import './containers/Sidebar/keyframes.scss';
 
 const App = () => {
   const { isOpen } = useSelector(state => state.sidebar);
+  const { modalIsOpen } = useSelector(state => state.auth);
   
   useEffect(() => {
-    if(isOpen){
+    if(isOpen || modalIsOpen){
       document.body.style.overflowY = "hidden";
     }else{
       document.body.style.overflowY = "scroll";
     }
-  }, [isOpen])
+  }, [isOpen, modalIsOpen])
 
   return (
     <Router>
       <Header/>
+      {modalIsOpen && <Authentication/>}
       <CSSTransition
         mountOnEnter
         unmountOnExit

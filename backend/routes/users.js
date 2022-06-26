@@ -27,6 +27,7 @@ router.get("/test", async (req, res) => {
 
 router.post('/up', async (req, resp) => {
 const { username, email, password } = req.body;
+console.log({username, email, password});
 const saltpassword = await bcrypt.genSalt(10)
 const securepassword = await  bcrypt.hash(req.body.password,saltpassword)
     
@@ -57,19 +58,19 @@ const securepassword = await  bcrypt.hash(req.body.password,saltpassword)
 
 router.post('/login', async (req, resp) => {
     try{
-        const user = await User.findOne({email: req.body.email});
-        console.log(user)
-        !user && resp.status(401).json("Wrong credentials");
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
-        if(!validPassword) resp.status(400).json("your email or password invalid");  
-        resp.send(user);
-//--------------------------------
-        const token = user.generateAuthToken();
-        res.send(token);
-//--------------------------------
-     
+      const user = await User.findOne({email: req.body.email});
+      if(!user) return resp.status(401).json("Wrong credentials");
+
+      const validPassword = await bcrypt.compare(req.body.password, user.password);
+      if(!validPassword) resp.status(400).json("your email or password is invalid");  
+      
+      resp.send(user);
+      //--------------------------------
+      // const token = user.generateAuthToken();
+      // res.send(token); 
+      //--------------------------------
     }catch (err) {
-        resp.status(500).json(err);
+      resp.status(500).json(err);
     }
      
 });
