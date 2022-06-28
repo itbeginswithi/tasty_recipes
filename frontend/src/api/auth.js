@@ -24,3 +24,15 @@ export const authLogin = async ({ email, password }) => {
     return { message: error.message };
   }
 };
+
+export const updatePassword = async (userData) => {
+  try {
+    const { data } = await axios.post("http://localhost:3000/app/login", {
+      userData
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    return { message: error.message };
+  }
+};

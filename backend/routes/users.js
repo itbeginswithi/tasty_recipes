@@ -152,3 +152,29 @@ module.exports = router
 //   const token = user.generateAuthToken();
 //   res.send(token);
 // });
+
+router.post("/updatePassword", async (req, res) => {
+  const {userId, password, newPassword} = req.body;
+  
+  try{
+    const userExists = await User.findOne({_id: userId});
+    if (!userExists) return res.status(404).json({ message: "User does not exist" });
+
+    //compare passwords
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      userExists.password
+    );
+    if(!isPasswordCorrect) return res.status(404).json({ message: "Wrong password" });
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await  bcrypt.hash(newPassword, salt)
+    userExists.password = hashedPassword;
+    userExists.save();
+    
+    return res.status(200).json({ success: "Password Updated Successfuly" });
+
+  }catch(error) {
+    res.status(404).json({ message: "Error: " + error.message });
+  }
+})
