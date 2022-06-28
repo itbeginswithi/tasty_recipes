@@ -7,7 +7,6 @@ export const authSignup = async ({ username, email, password }) => {
       email: email,
       password: password,
     });
-    console.log(res);
     return res;
   } catch (error) {
     console.error(error);
@@ -20,7 +19,6 @@ export const authLogin = async ({ email, password }) => {
       email,
       password,
     });
-    console.log(data);
     return data;
   } catch (error) {
     return { message: error.message };

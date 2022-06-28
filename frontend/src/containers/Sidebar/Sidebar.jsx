@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
 import {useDispatch} from 'react-redux';
 import { CgClose } from 'react-icons/cg';
@@ -8,6 +8,7 @@ import classes from './Sidebar.module.scss';
 import noDataAnimation from '../../animations/89841-no-records-found.json';
 import RecipeItem from './recipeItem/recipeItem';
 import {setSidebarIsOpen} from '../../store/sidebarSlice';
+import { fetchBookmarks } from '../../api/recipes';
 
 const RECIPE_LIST = [
   {
@@ -35,6 +36,21 @@ const RECIPE_LIST = [
 const Sidebar = () => {
   const [favourites, setFavourites] = useState([]);
   const dispatch = useDispatch();
+
+  const userId = localStorage.getItem('userId');
+
+  useEffect(() => {
+    
+    const fetchBM = async () => {
+      const {data} = await fetchBookmarks(userId);
+      return data;
+    }   
+    
+    if(userId) {
+      const data = fetchBM();
+      //fetch recipes
+    }
+  }, [userId]);
 
   const animationOptions = { 
     loop: false,

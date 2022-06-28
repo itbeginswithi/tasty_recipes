@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { MdOutlineDone } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import classes from './Settigns.module.scss';
 
 const Settings = () => {
+  const {isSignedIn} = useSelector(state => state.auth);
+  const navigate = useNavigate();
   const [curPassword, setCurPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [secondNewPassword, setSecondNewPassword] = useState('');
@@ -92,6 +96,8 @@ const Settings = () => {
     setNewPassword('');
     setSecondNewPassword('');
   }
+
+  if(!isSignedIn) return navigate('/');
 
   return (
     <div className={classes.container}>

@@ -9,11 +9,11 @@ import classes from "./RecipeItem.module.scss";
 import FavBtn from "../FavBtn/FavBtn";
 
 const RecipeItem = ({
+  recipe,
   imageUrl,
   label,
   healthLabels,
   servings,
-  id,
   cuisineType,
   calories,
   totalWeight,
@@ -87,7 +87,7 @@ const RecipeItem = ({
               }
           </button>
 
-          <FavBtn addedToFav={addedToFav}/>
+          <FavBtn addedToFav={addedToFav} recipe={recipe} />
         </div>
     </div>
   );

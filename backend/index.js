@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({limit : '30mb', extended: true}));
 app.use(cors())
 app.use(express.json())
 app.use('/app',routersUrls)
-app.use('/book',routersBookmarks)
+app.use('/bookmark',routersBookmarks)
 app.use('/rec',routersRecipes)
 
 mongoose

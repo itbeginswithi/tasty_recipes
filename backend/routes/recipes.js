@@ -11,41 +11,40 @@ router.get("/kh", async (req, res) => {
       // add recipes
 
 router.post('/addRecipes', async (req, resp) => {
-    const { calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabel, 
+    const { calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabels, 
       image, ingredientLines, ingredients, label, mealType, shareAs, source,
-       totalDaily, totalNutrients, totalTime, totalWeight  } = req.body;
+       totalDaily, totalNutrients, totalTime, totalWeight, yield  } = req.body;
      
         const saveRecipes = new Recipes({
-          calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabel, 
+          calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabels, 
           image, ingredientLines, ingredients, label, mealType, shareAs, source,
-           totalDaily, totalNutrients, totalTime, totalWeight
-             })
+           totalDaily, totalNutrients, totalTime, totalWeight, yield
+             });
             
             saveRecipes.save()   
             .then(data =>{
             resp.json(data)
 
-            resp.status(200).json({
-              calories: req.body.calories,
-              cautions: req.body.cautions,
-              cuisineType: req.body.cuisineType,
-              dietLabels: req.body.dietLabels,
-              digest: req.body.digest,
-              dishType: req.body.dishType,
-              heathLabel: req.body.heathLabel,
-              image: req.body.image,
-              ingredientLines: req.body.ingredientLines,
-              ingredients: req.body.ingredients,
-              label: req.body.label,
-              mealType: req.body.mealType,
-              shareAs: req.body.shareAs,
-              source: req.body.source,
-              totalDaily: req.body.totalDaily,
-              totalNutrients: req.body.totalNutrients,
-              totalTime: req.body.totalTime,
-              totalWeight: req.body.totalWeight
-
-              });
+            // resp.status(200).json({
+            //   calories: req.body.calories,
+            //   cautions: req.body.cautions,
+            //   cuisineType: req.body.cuisineType,
+            //   dietLabels: req.body.dietLabels,
+            //   digest: req.body.digest,
+            //   dishType: req.body.dishType,
+            //   heathLabel: req.body.heathLabel,
+            //   image: req.body.image,
+            //   ingredientLines: req.body.ingredientLines,
+            //   ingredients: req.body.ingredients,
+            //   label: req.body.label,
+            //   mealType: req.body.mealType,
+            //   shareAs: req.body.shareAs,
+            //   source: req.body.source,
+            //   totalDaily: req.body.totalDaily,
+            //   totalNutrients: req.body.totalNutrients,
+            //   totalTime: req.body.totalTime,
+            //   totalWeight: req.body.totalWeight
+            //   });
         })
         .catch(error =>{
             resp.json(error)
@@ -67,12 +66,12 @@ router.post('/addRecipes', async (req, resp) => {
 
       router.get("/:id", async (req, res) => {
         const id_recipes= req.params.id
-        const khalid = await Recipes.findById(id_recipes); 
-       if (!khalid){
+        const recipe = await Recipes.findById(id_recipes); 
+       if (!recipe){
         return res.status(202).send("recipes Id not found.");
       }
        else 
-        res.send(khalid);
+        res.send(recipe);
       });
     
     

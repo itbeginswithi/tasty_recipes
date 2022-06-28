@@ -83,8 +83,8 @@ const Header = () => {
         <input 
           className={classes.search_input}
           type="text"   
-          name="search" 
-          autoComplete="off" 
+          name="searchbar" 
+          autocomplete="off" 
           placeholder="Search for a recipe.."
           onChange={(e) => setQuery(e.target.value)} />
         <button type="button" className={classes.search_btn} onClick={() => fetchRecipes(query)} >

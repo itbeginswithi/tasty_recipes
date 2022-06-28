@@ -7,9 +7,13 @@ const BookmarksSchema=new mongoose.Schema({
       ref: "User",
     },
 
-    recipesId: {
+    recipeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Recipes",
+    },
+
+    recipeName: {
+      type: String
     },
 
     date:{
