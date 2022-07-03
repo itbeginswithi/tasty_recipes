@@ -9,19 +9,21 @@ import classes from "./recipeItem.module.scss";
 import { FavBtn } from "../../../components";
 
 const recipeItem = ({
+  recipe,
   recipe: {
     label,
-    addedToFav,
     cuisineType,
     totalTime,
     totalWeight,
-    servings,
     calories,
-    imageUrl,
+    image,
+    yield: servings
   },
   recipeId,
   singleRecipe,
+  addedToFav
 }) => {
+  
   return (
     <li
       className={
@@ -33,7 +35,7 @@ const recipeItem = ({
       <div className={classes.recipe__container}>
         <Link
           to={`/recipe/` + recipeId}
-          style={{ backgroundImage: "url(" + imageUrl + ")" }}
+          style={{ backgroundImage: "url(" + image + ")" }}
           className={classes.recipe__img}
         />
         <div className={classes.recipe__info}>
@@ -76,7 +78,7 @@ const recipeItem = ({
           </Link>
           
           <div className={classes.recipe__actions}>
-            <FavBtn addedToFav={addedToFav} />
+            <FavBtn addedToFav={addedToFav} recipe={recipe} />
           </div>
         </div>
       </div>

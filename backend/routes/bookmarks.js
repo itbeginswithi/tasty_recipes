@@ -2,15 +2,15 @@ const express = require('express');
 const bookmarks = require('../models/bookmarks.js');
 const router = express.Router()
 const Bookmarks = require('../models/bookmarks.js');
-const recipes = require('../models/recipes.js');
+const Recipes = require('../models/recipes.js');
 
 
 router.post('/add', async (req, resp) => {
-  const {userId, recipeId, recipeName } = req.body;
-  
-      const saveBook = new Bookmarks({ userId, recipeId, recipeName });  
-      console.log(saveBook);
-      saveBook.save()   
+  const {userId, recipe} = req.body;
+    console.log(userId, recipe)
+      const saveBook = new Bookmarks({ userId, recipe });  
+      
+      await saveBook.save()   
         .then((resp) =>{
           resp.status(200).json({
             bookmarkId: saveBook._id
@@ -30,27 +30,27 @@ router.post('/add', async (req, resp) => {
     //   res.send(bookmarks);
     // });
 
-    router.delete("/:id",  async (req, res) => {
-      const id_book = req.params.id;
-      const {recipeName}= req.body;
+    router.delete("/", async  (req, res) => {
+      const {recipeId, userId} = req.query;
 
-      // const book_delete = await Bookmarks.find({}, {"recipeName": 1});
-      // const book_delete = await Bookmarks.findByIdAndRemove(id_book);
-      // const book_delete = await Bookmarks.;
+      const bookmarkObj = await Bookmarks.find({"recipe" : recipeId, "userId": userId});
+      
+      const response = await Bookmarks.findByIdAndDelete(bookmarkObj[0]._id);
 
-      // if (!book_delete) {
-      //   res.status(202).send("bookmarks not found")
-      // }else{
-      //   res.status(200).send(book_delete)
-      // }
+  
+      if (!response) {
+        res.status(202).send("bookmarks not found");
+      }else{
+        res.status(200).send(response);
+      }
     })
 
     router.get("/read",  async (req, res) => {
       const {userId} = req.query;
-      const {recipeName}= req.body;
 
-      const response = await bookmarks.find({userId: userId});
-      res.status(200).json(response)
+      const response = await bookmarks.find({userId: userId}).populate('recipe');
+      const recipe_list = response.map(recipe => recipe.recipe)
+      res.status(200).json(recipe_list);
     })
 
 

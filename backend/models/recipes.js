@@ -36,7 +36,9 @@ const RecipesSchema=new mongoose.Schema({
 
   totalTime:{  type:Number },
 
-  totalWeight:{  type:Number }
+  totalWeight:{  type:Number },
+  
+  yield: {type: Number}
 
 })
 

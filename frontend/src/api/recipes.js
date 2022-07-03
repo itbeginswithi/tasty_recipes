@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export const getRecipes = async (query) => {
-    let recipes = {};
 
     const options = {
         method: 'GET',
@@ -26,23 +25,26 @@ export const getRecipes = async (query) => {
 }
 
 export const addToFavRecipe = async (recipe) => {
-
+  
   try {
+    const recipeImage = "https://source.unsplash.com/450x650?" + recipe.label.split(' ').join('-');
+
     const { data } = await axios.post("http://localhost:3000/rec/addRecipes", {
-        ...recipe
-      })
+        ...recipe,
+        image: recipeImage,
+      })   
+
     return data._id;
   } catch (error) {
     return { message: error.message };
   }    
 }
 
-export const addBookmark = async (recipeId, userId, recipeName) => {
-  console.log({recipeId, userId, recipeName});
+export const addBookmark = async ({recipeId, userId}) => {
+
   try {
-    const { data } = await axios.post("http://localhost:3000/bookmark/add", {
-        recipeId,
-        recipeName,
+    const { data } = await axios.post("http://localhost:3000/bookmarks/add", {
+        recipe: recipeId,
         userId
       })
     return data;
@@ -54,7 +56,17 @@ export const addBookmark = async (recipeId, userId, recipeName) => {
 export const removeBookmark = async ({recipeId, userId}) => {
   
   try {
-    const { data } = await axios.delete(`http://localhost:3000/bookmark/${recipeId}-${userId}`);
+    const { data } = await axios.delete(`http://localhost:3000/bookmarks?recipeId=${recipeId}&userId=${userId}`);
+    return data;
+  } catch (error) {
+    return { message: error.message };
+  }    
+}
+
+export const removeFavRecipe = async ({recipeId}) => {
+  
+  try {
+    const { data } = await axios.delete(`http://localhost:3000/rec/${recipeId}`);
     return data;
   } catch (error) {
     return { message: error.message };
@@ -64,9 +76,7 @@ export const removeBookmark = async ({recipeId, userId}) => {
 export const fetchBookmarks = async (userId) => {
   
   try {
-    console.log('here')
-    const data = await axios.get(`http://localhost:3000/bookmark/read?userId=${userId}`);
-    console.log('here 2')
+    const data = await axios.get(`http://localhost:3000/bookmarks/read?userId=${userId}`);
     return data;
   } catch (error) {
     return { message: error.message };

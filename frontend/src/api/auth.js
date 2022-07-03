@@ -1,8 +1,10 @@
 import axios from "axios";
 
+axios.defaults.baseURL = "http://localhost:3000";
+
 export const authSignup = async ({ username, email, password }) => {
   try {
-    const res = await axios.post("http://localhost:3000/app/up", {
+    const res = await axios.post("/app/up", {
       username: username,
       email: email,
       password: password,
@@ -15,7 +17,7 @@ export const authSignup = async ({ username, email, password }) => {
 
 export const authLogin = async ({ email, password }) => {
   try {
-    const { data } = await axios.post("http://localhost:3000/app/login", {
+    const { data } = await axios.post("/app/login", {
       email,
       password,
     });
@@ -25,13 +27,19 @@ export const authLogin = async ({ email, password }) => {
   }
 };
 
-export const updatePassword = async (userData) => {
+export const authUpdatePassword = async (userData) => {
+  const { userId, password, newPassword } = userData;
   try {
-    const { data } = await axios.post("http://localhost:3000/app/login", {
-      userData
-    });
-    console.log(data);
-    return data;
+    const response = await axios.post(
+      "/app/updatePassword",
+      {
+        userId,
+        password,
+        newPassword,
+      }
+    );
+    
+    return response;
   } catch (error) {
     return { message: error.message };
   }

@@ -79,11 +79,13 @@ router.post('/addRecipes', async (req, resp) => {
 
       router.delete("/:id",  async (req, res) => {
         const id = req.params.id;
+        
         const rec_delete = await Recipes.findByIdAndRemove(id);
-        if (!rec_delete) {return res.status(202).send("Recipes not found -_-")
+        
+        if (!rec_delete) {
+          return res.status(202).json({"message": "Recipes not found"})
         }
-        else
+        
         res.status(200).send(rec_delete)
-       
       })    
 module.exports = router

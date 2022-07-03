@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Lottie from 'react-lottie';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { CgClose } from 'react-icons/cg';
 
 import './keyframes.scss';
@@ -9,6 +9,8 @@ import noDataAnimation from '../../animations/89841-no-records-found.json';
 import RecipeItem from './recipeItem/recipeItem';
 import {setSidebarIsOpen} from '../../store/sidebarSlice';
 import { fetchBookmarks } from '../../api/recipes';
+import { RecipeList } from '../../components';
+import { setRecipes} from '../../store/bookmarksSlice';
 
 const RECIPE_LIST = [
   {
@@ -34,23 +36,27 @@ const RECIPE_LIST = [
 ]
 
 const Sidebar = () => {
-  const [favourites, setFavourites] = useState([]);
+  const {isOpen} = useSelector(state => state.sidebar)
+  const { recipes } = useSelector(state => state.bookmarks)
+  
+  const [firstTimeOpened, setFirstTimeOpened] = useState(true);
   const dispatch = useDispatch();
 
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
-    
+
     const fetchBM = async () => {
-      const {data} = await fetchBookmarks(userId);
-      return data;
-    }   
-    
-    if(userId) {
-      const data = fetchBM();
-      //fetch recipes
+      const { data } = await fetchBookmarks(userId); 
+      dispatch(setRecipes(data));
     }
-  }, [userId]);
+    
+    if(isOpen && firstTimeOpened) {
+      fetchBM();
+    }
+
+  }, [isOpen]);
+
 
   const animationOptions = { 
     loop: false,
@@ -66,23 +72,23 @@ const Sidebar = () => {
         <div className={classes.sidebar__fullbg} onClick={() => dispatch(setSidebarIsOpen(false))} />
 
         <div className={classes.sidebar__container}>
-          <ul className={RECIPE_LIST < 0 ? classes.sidebar : classes.recipeList}>
+          <ul className={recipes.length < 0 ? classes.sidebar : classes.recipeList}>
             <div className={classes.controllers}>
               <span className={classes.list_length}>
-                <strong>{RECIPE_LIST.length}</strong> {RECIPE_LIST.length === 1 ? 'recipe' : 'recipes'}
+                <strong>{recipes.length}</strong> {recipes.length === 1 ? 'recipe' : 'recipes'}
               </span>
               <div className={classes.controllers__btn} onClick={() => dispatch(setSidebarIsOpen(false))}>
                 <CgClose/>
               </div>
             </div>
             {
-              RECIPE_LIST.map((recipe, index) => (
-                <RecipeItem recipe={recipe} key={index} singleRecipe={RECIPE_LIST.length < 2}/>
+              recipes?.length > 0 && recipes?.map((recipe, index) => (
+                <RecipeItem recipe={recipe} key={index} singleRecipe={recipes.length < 2} addedToFav/>
               ))
-            }
+            }   
           </ul>
             {/* Display a lottie animation if no recipe is saved */}
-            {!RECIPE_LIST.length &&  (
+            {!recipes.length &&  (
                 <div className={classes.lottieContainer}> 
                   <Lottie  options={animationOptions} width={'25rem'} height="auto"/>
                 </div>
