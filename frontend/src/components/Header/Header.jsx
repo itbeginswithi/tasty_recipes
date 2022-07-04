@@ -17,7 +17,7 @@ const Header = () => {
   const { isSignedIn } = useSelector(state => state.auth);
   const [showUserOptions, setShowUserOptions] = useState(false);
   const [query, setQuery] = useState('');
-  const [prevQuery, setPrevQuery] = useState('');
+  // const [prevQuery, setPrevQuery] = useState('');
   const username = localStorage.getItem('username');
 
   const dispatch = useDispatch();
@@ -26,11 +26,10 @@ const Header = () => {
   const fetchRecipes = async (query) => {
     navigate('/');
 
-    if(query === prevQuery || query === '') {
+    if(query === '') {
       return;
     }
     
-    setPrevQuery(query);
     dispatch(setFetchingRecipes(true));
 
     const recipes = await getRecipes(query);
@@ -84,7 +83,7 @@ const Header = () => {
           className={classes.search_input}
           type="text"   
           name="searchbar" 
-          autocomplete="off" 
+          autoComplete="off" 
           placeholder="Search for a recipe.."
           onChange={(e) => setQuery(e.target.value)} />
         <button type="button" className={classes.search_btn} onClick={() => fetchRecipes(query)} >

@@ -4,7 +4,7 @@ const initialState = {
     recipes: [],
 }
 const Bookmarks = createSlice({
-    name: 'Bookmarks',
+    name: 'bookmarks',
     initialState,
     reducers: {
         setRecipes: (state, action) => {

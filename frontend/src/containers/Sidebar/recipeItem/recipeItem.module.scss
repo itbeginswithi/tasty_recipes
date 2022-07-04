@@ -65,7 +65,7 @@
     }
 
     &__info{
-        @include flex($direction: column);
+        @include flex($direction: column, $align: space-between);
         
         padding: 1rem;
         overflow: hidden;
@@ -81,6 +81,11 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+
+            
+            @media (min-width: 330px) and (max-width: 500px){
+                white-space: pre-wrap;
+            }
         }
 
         & .labels {

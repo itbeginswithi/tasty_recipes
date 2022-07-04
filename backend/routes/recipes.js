@@ -2,15 +2,9 @@ const express = require('express')
 const router = express.Router()
 const Recipes = require('../models/recipes.js');
 
-router.get("/kh", async (req, res) => {
-    console.log('la vie est tres simple');
-    res.json({"msg":"khalidovic"});
-    });
-
-
       // add recipes
 
-router.post('/addRecipes', async (req, resp) => {
+router.post('/addRecipes', (req, resp) => {
     const { calories, cautions, cuisineType , dietLabels, digest, dishType, heathLabels, 
       image, ingredientLines, ingredients, label, mealType, shareAs, source,
        totalDaily, totalNutrients, totalTime, totalWeight, yield  } = req.body;

@@ -6,54 +6,31 @@ import { CgClose } from 'react-icons/cg';
 import './keyframes.scss';
 import classes from './Sidebar.module.scss';
 import noDataAnimation from '../../animations/89841-no-records-found.json';
-import RecipeItem from './recipeItem/recipeItem';
+import RecipeItem from './RecipeItem/RecipeItem';
 import {setSidebarIsOpen} from '../../store/sidebarSlice';
 import { fetchBookmarks } from '../../api/recipes';
-import { RecipeList } from '../../components';
+import { RecipeList, RippleAnimation } from '../../components';
 import { setRecipes} from '../../store/bookmarksSlice';
 
-const RECIPE_LIST = [
-  {
-    label: 'pizza',
-    imageUrl: 'https://source.unsplash.com/700x500/?pizza',
-    cuisineType: ['Mexican'],
-    calories: 650,
-    totalWeight: 450,
-    totalTime: 60,
-    servings: 6,
-    addedToFav: true
-  },
-  {
-    label: 'pizza',
-    imageUrl: 'https://source.unsplash.com/700x500/?tacos',
-    cuisineType: ['Mexican'],
-    calories: 650,
-    totalWeight: 450,
-    totalTime: 60,
-    servings: 6,
-    addedToFav: true
-  },
-]
-
 const Sidebar = () => {
-  const {isOpen} = useSelector(state => state.sidebar)
-  const { recipes } = useSelector(state => state.bookmarks)
-  
-  const [firstTimeOpened, setFirstTimeOpened] = useState(true);
+  const {isOpen} = useSelector(state => state.sidebar);
+  const { recipes } = useSelector(state => state.bookmarks);
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
 
+    
     const fetchBM = async () => {
-      const { data } = await fetchBookmarks(userId); 
-      dispatch(setRecipes(data));
+      setIsLoading(true)
+      const { data } = await fetchBookmarks(userId);
+      dispatch(setRecipes(data.filter(recipe => recipe !== null)));
+      setIsLoading(false)
     }
     
-    if(isOpen && firstTimeOpened) {
-      fetchBM();
-    }
+    fetchBM();
 
   }, [isOpen]);
 
@@ -67,12 +44,39 @@ const Sidebar = () => {
     }
   }
 
+  if(isLoading) {
+    return (
+      <div className={classes.container}>
+        <div className={classes.sidebar__fullbg} onClick={() => dispatch(setSidebarIsOpen(false))} />
+          <div className={classes.sidebar__container}>
+            <RippleAnimation />
+          </div>
+      </div>
+    )
+  }
+
+  if(!recipes?.length && !isLoading) {
+    return (
+      (
+        <div className={classes.container}>
+        <div className={classes.sidebar__fullbg} onClick={() => dispatch(setSidebarIsOpen(false))} />
+
+          <div className={classes.sidebar__container}>
+            <div className={classes.lottieContainer}> 
+              <Lottie  options={animationOptions} width={'25rem'} height="auto"/>
+            </div>
+          </div>
+        </div>
+      )
+    )
+  }
+
   return (
       <div className={classes.container}>
         <div className={classes.sidebar__fullbg} onClick={() => dispatch(setSidebarIsOpen(false))} />
 
         <div className={classes.sidebar__container}>
-          <ul className={recipes.length < 0 ? classes.sidebar : classes.recipeList}>
+          <ul className={recipes?.length < 0 ? classes.sidebar : classes.recipeList}>
             <div className={classes.controllers}>
               <span className={classes.list_length}>
                 <strong>{recipes.length}</strong> {recipes.length === 1 ? 'recipe' : 'recipes'}
@@ -87,13 +91,9 @@ const Sidebar = () => {
               ))
             }   
           </ul>
-            {/* Display a lottie animation if no recipe is saved */}
-            {!recipes.length &&  (
-                <div className={classes.lottieContainer}> 
-                  <Lottie  options={animationOptions} width={'25rem'} height="auto"/>
-                </div>
-              )
-            }
+            {/* Display a lottie animation if no recipe is saved
+            { &&  
+            } */}
         </div>
       </div>
   )

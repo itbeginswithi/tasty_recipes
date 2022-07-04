@@ -8,13 +8,15 @@ import { setModalIsOpen } from '../../store/authSlice';
 import { setRecipes } from '../../store/bookmarksSlice';
 
 const FavBtn = ({addedToFav, recipe}) => {
-    const {recipes} = useSelector(state => state.bookmarks);
+    const { recipes: BMRecipes } = useSelector(state => state.bookmarks);
+    const { recipes } = useSelector(state => state.recipes);
+    const state = useSelector(state => state);
     const { isSignedIn } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const [favorite, setFavorite] = useState(addedToFav);
 
     const [recipeId, setRecipeId] = useState('');
-    const [bookmarkId, setBookmarkId] = useState('');
+    const [recipeImage, setRecipeImage] = useState('');
 
     //add function to remove or add to favList on the database
     //if removed from database, remove the item from the [] list
@@ -27,16 +29,15 @@ const FavBtn = ({addedToFav, recipe}) => {
         const recipeId = await addToFavRecipe(recipe);
         
         // add recipe bookmark in the frontend
-        const newFavRecipes = [...recipes, recipe];
+        const newFavRecipes = [...BMRecipes, recipe];
         dispatch(setRecipes(newFavRecipes));
-        console.log(newFavRecipes);
 
         // add userid and recipeId
         const userId = localStorage.getItem('userId');
         const bookmarkId = await addBookmark({recipeId, userId});
 
+        setRecipeImage(recipe.image);
         setRecipeId(recipeId);
-        setBookmarkId(bookmarkId);
     }
 
     const removeRecipeFromFav = async () => {
@@ -48,21 +49,18 @@ const FavBtn = ({addedToFav, recipe}) => {
         //delete the favorit recipe from the sidebar
         if(!recipeId){
             const recipeId = recipe._id;
-            const filteredRecipes = recipes.filter(rec => rec._id !== recipeId);
-            dispatch(setRecipes(filteredRecipes));
+            const filteredBMRecipes = BMRecipes.filter(rec => rec._id !== recipe._id);
+            dispatch(setRecipes(filteredBMRecipes));
+
             await removeFavRecipe({recipeId});
             await removeBookmark({recipeId, userId});
             return;
         }
-
-        //delete the favorit recipe from the main page
-        const filteredRecipes = recipes.filter(recipe => recipe._id !== recipeId);
-        dispatch(setRecipes(filteredRecipes));  
+ 
 
         //removefavorite from the backend
         await removeFavRecipe({recipeId});
-        const what = await removeBookmark({recipeId, userId});
-        // // add userid and recipeId
+        await removeBookmark({recipeId, userId});
         // await addBookmark(recipeId, userId, recipe.label);
     }
 

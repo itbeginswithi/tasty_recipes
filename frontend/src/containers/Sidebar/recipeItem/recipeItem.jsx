@@ -7,8 +7,10 @@ import { MdOutlineTimer } from "react-icons/md";
 
 import classes from "./recipeItem.module.scss";
 import { FavBtn } from "../../../components";
+import { setSidebarIsOpen } from "../../../store/sidebarSlice";
+import { useDispatch } from "react-redux";
 
-const recipeItem = ({
+const RecipeItem = ({
   recipe,
   recipe: {
     label,
@@ -19,11 +21,14 @@ const recipeItem = ({
     image,
     yield: servings
   },
-  recipeId,
   singleRecipe,
   addedToFav
 }) => {
+  const dispatch = useDispatch();
+  const recipeId = label?.toLowerCase().split(' ').join('-');
   
+  const recipeImg = image ? image : `https://source.unsplash.com/450x650?" + ${label.split(' ').join('-')}`
+
   return (
     <li
       className={
@@ -35,16 +40,17 @@ const recipeItem = ({
       <div className={classes.recipe__container}>
         <Link
           to={`/recipe/` + recipeId}
-          style={{ backgroundImage: "url(" + image + ")" }}
+          style={{ backgroundImage: "url(" +  recipeImg + ")" }}
           className={classes.recipe__img}
+          onClick={()  => dispatch(setSidebarIsOpen(false))}
         />
         <div className={classes.recipe__info}>
-          <Link to={"/recipe/" + recipeId} className={`${classes.recipe__link} ${classes.flex}`}>
+          <Link to={"/recipe/" + recipeId} className={`${classes.recipe__link} ${classes.flex}`} onClick={()  => dispatch(setSidebarIsOpen(false))}>
             <h1 className={classes.title}>{label}</h1>
 
             <ul className={classes.labels}>
               {/* Loop through the list items in the recipe */}
-              {cuisineType.length !== 0 && (
+              {cuisineType && (
                 <li className={classes.label} title="Cuisine Type">
                   <TbToolsKitchen2 />
                   {cuisineType[0].charAt(0).toUpperCase() +
@@ -86,4 +92,4 @@ const recipeItem = ({
   );
 };
 
-export default recipeItem;
+export default RecipeItem;

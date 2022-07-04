@@ -101,7 +101,6 @@ const Auth = () => {
     
     setIsLoading(true);
     const userObj = await authLogin({email, password});
-    console.log(userObj);
     setIsLoading(false);
     if(userObj.message) return setError('Email or password is incorrect');
 

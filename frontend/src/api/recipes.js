@@ -16,7 +16,15 @@ export const getRecipes = async (query) => {
           
         //hits: [{}, {}, {}]
         const {data: {hits}} = await axios.request(options);
-        return hits;
+
+        const recipes = hits.map(recipeObj => ({
+          recipe: {
+            ...recipeObj.recipe,
+            addedToFav: false
+          }
+        }))
+
+        return recipes;
 
       } catch (error) {
         console.log(error);  
@@ -27,11 +35,11 @@ export const getRecipes = async (query) => {
 export const addToFavRecipe = async (recipe) => {
   
   try {
-    const recipeImage = "https://source.unsplash.com/450x650?" + recipe.label.split(' ').join('-');
+    // const recipeImage = "https://source.unsplash.com/450x650?" + recipe.label.split(' ').join('-');
 
     const { data } = await axios.post("http://localhost:3000/rec/addRecipes", {
         ...recipe,
-        image: recipeImage,
+        // image: recipeImage,
       })   
 
     return data._id;
@@ -54,7 +62,6 @@ export const addBookmark = async ({recipeId, userId}) => {
 }
 
 export const removeBookmark = async ({recipeId, userId}) => {
-  
   try {
     const { data } = await axios.delete(`http://localhost:3000/bookmarks?recipeId=${recipeId}&userId=${userId}`);
     return data;
@@ -64,6 +71,9 @@ export const removeBookmark = async ({recipeId, userId}) => {
 }
 
 export const removeFavRecipe = async ({recipeId}) => {
+  
+  console.log('here');
+  console.log({recipeId});
   
   try {
     const { data } = await axios.delete(`http://localhost:3000/rec/${recipeId}`);
