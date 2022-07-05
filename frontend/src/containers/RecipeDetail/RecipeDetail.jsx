@@ -42,9 +42,7 @@ const RecipeDetail = () => {
   return (
     <div className={classes.mustapha}>
 
-            <div >
             <h1 className={classes.title}>{recipe?.label}</h1>
-            </div>
             <table>
               <tr>
           <td className={classes.image}>
