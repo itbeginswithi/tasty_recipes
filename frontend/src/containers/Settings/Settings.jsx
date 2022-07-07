@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { MdOutlineDone } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { authUpdatePassword } from '../../api/auth';
 
 import classes from './Settigns.module.scss';
 
 const Settings = () => {
+  const {isSignedIn} = useSelector(state => state.auth);
+  const navigate = useNavigate();
   const [curPassword, setCurPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [secondNewPassword, setSecondNewPassword] = useState('');
@@ -20,7 +25,7 @@ const Settings = () => {
     }
   }, [isSuccessful])
 
-  const updatePassword = () => {
+  const updatePassword = async () => {
     //*Check if cur Password is right
     
     //New Password checks
@@ -83,15 +88,28 @@ const Settings = () => {
     setCPError([]);
     
     //Send data to the database
+    const userId = localStorage.getItem('userId');
+    const response = await authUpdatePassword({userId, password: curPassword, newPassword});
+    
     setIsLoading(false);
-
+    
+    if(response.message){
+      const errors = cpError;
+      errors.push('Current password is incorrect');
+      setCPError(errors);
+      return;
+    }
+    
     // return error if any
     //clean inputs if successful
     setIsSuccessful(true);
+    setCPError([]);
     setCurPassword('');
     setNewPassword('');
     setSecondNewPassword('');
   }
+
+  if(!isSignedIn) return navigate('/');
 
   return (
     <div className={classes.container}>

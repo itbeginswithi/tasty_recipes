@@ -1,19 +1,20 @@
 const mongoose=require('mongoose')
+
 const RecipesSchema=new mongoose.Schema({
 
   calories:{ type:Number },
 
   cautions:{ type:Array },
 
-  cuisineType:{ type:String },
+  cuisineType:{ type: Array },
 
-  dietLabels:{ type:String },
+  dietLabels:{ type: Array },
 
   digest:{ type:Array  },
 
-  dishType:{ type:String  },
+  dishType:{ type: Array  },
 
-  heathLabel:{  type:String },
+  heathLabels:{  type: Array },
 
   image:{ type:String },
 
@@ -29,16 +30,15 @@ const RecipesSchema=new mongoose.Schema({
 
   source:{  type:String },
 
-  totalDaily:{  type:Array },
-
+  totalDaily:{  type: Object },
+  
   totalNutrients:{  type:Array },
 
   totalTime:{  type:Number },
 
-  totalWeight:{  type:Number }
-
+  totalWeight:{  type:Number },
   
-  
+  yield: {type: Number}
 
 })
 

@@ -13,28 +13,36 @@ const RecipeDetail = () => {
   const [favorite, setFavorite] = useState(false);
   const [liked, setLiked] = useState(false);
   const { recipes } =  useSelector(state => state.recipes);
+  const { recipes: BMRecipes } =  useSelector(state => state.bookmarks);
   const [oldRecipeLabel, setOldRecipeLabel] = useState('');
 
   const location = useLocation();
   const recipeLabel = location.pathname.split('/')[2].split('-').join(' ');
 
-  let recipeRef = useRef();
-  let recipe = recipeRef?.current?.recipe;
-  
+  const recipeRef = useRef();
+  const recipe = recipeRef?.current?.recipe;
 
   useEffect(() => {
     if(recipeLabel !== oldRecipeLabel) {
-      setOldRecipeLabel(recipe);
-      recipeRef.current =  recipes.find(({recipe}) => recipe.label.toLowerCase() === recipeLabel);
+      setOldRecipeLabel(recipeLabel);
+      
+      let recipe =  recipes.find(({recipe}) => recipe.label.toLowerCase() === recipeLabel);
+
+      if(!recipe && recipeLabel){
+        const recipeObj =  BMRecipes.find(recipe => recipe.label.toLowerCase() === recipeLabel);
+        recipe = {
+          recipe: {...recipeObj}
+        }
+      }
+
+      recipeRef.current = recipe;
     }
-  }, [recipeLabel]);
+  }, [recipeLabel, recipe, recipes, BMRecipes]);
 
   return (
     <div className={classes.mustapha}>
 
-            <div >
             <h1 className={classes.title}>{recipe?.label}</h1>
-            </div>
             <table>
               <tr>
           <td className={classes.image}>
@@ -43,7 +51,7 @@ const RecipeDetail = () => {
         </td>
         <td className={classes.info}>
       <tr className={classes.healthLabels}>
-        <h1 className={classes.healthLabels__tag} >{recipe?.healthLabels.slice(0,5).join(" ")}</h1>
+        <h1 className={classes.healthLabels__tag} >{recipe?.healthLabels?.slice(0,5).join(" ")}</h1>
         </tr>
         <tr className={classes.healthNumbers}>
         <h1 ><MdOutlineTimer   />{recipe?.totalTime}min</h1>

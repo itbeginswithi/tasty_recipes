@@ -22,12 +22,19 @@
     display: block;
     margin-left: 10;
     margin-right: 10;
-   
-    
-  //   min-width: 100rem;
-  // max-width: 100rem;
- 
 
+    @media (max-width: 1050px){
+      & img{
+        width: min(95%, 700px) !important;
+        height: auto;
+      }
+    }
+    
+    
+    //   min-width: 100rem;
+    // max-width: 100rem;
+    
+    
    
   }
   .title{
@@ -44,9 +51,17 @@
     margin-right: auto;
     
     min-width: 100rem;
-  max-width: 100rem;
-  font-size: 3.7rem;
-      font-family: "Times New Roman", Times, serif;
+    max-width: 100rem;
+    font-size: 3.7rem;
+    font-family: "Times New Roman", Times, serif;
+    
+    @media (max-width: 1050px){
+      font-size: 3.5rem;
+      word-wrap: break-word;
+      font-size: 3.5rem;
+      max-width: 95%;
+      min-width: 95%;
+    }
   }
   .info {
     padding: 1rem;
@@ -91,6 +106,12 @@
       flex-wrap: wrap;
       gap: 1rem;
      
+      @media (max-width: 1050px) {  
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 2rem;
+      }
       
       &_item {
         display: flex;
@@ -165,4 +186,12 @@
     }
   
  }
+}
+
+@media (max-width: 1050px){
+  table tr{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem
+  }
 }

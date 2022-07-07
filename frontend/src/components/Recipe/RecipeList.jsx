@@ -50,6 +50,7 @@ const RecipeList = () => {
       {(recipes && !fetchingRecipes) && recipes.map(({recipe}, i) => (
         <RecipeItem 
           key = {i}
+          recipe={recipe}
           imageUrl = {recipe?.image}
           label = {recipe?.label}
           healthLabels = {recipe?.healthLabels.slice(0, 5)}

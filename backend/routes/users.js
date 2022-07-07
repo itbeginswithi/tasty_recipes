@@ -27,6 +27,7 @@ router.get("/test", async (req, res) => {
 
 router.post('/up', async (req, resp) => {
 const { username, email, password } = req.body;
+console.log({username, email, password});
 const saltpassword = await bcrypt.genSalt(10)
 const securepassword = await  bcrypt.hash(req.body.password,saltpassword)
     
@@ -57,19 +58,19 @@ const securepassword = await  bcrypt.hash(req.body.password,saltpassword)
 
 router.post('/login', async (req, resp) => {
     try{
-        const user = await User.findOne({email: req.body.email});
-        console.log(user)
-        !user && resp.status(401).json("Wrong credentials");
-        const validPassword = await bcrypt.compare(req.body.password, user.password);
-        if(!validPassword) resp.status(400).json("your email or password invalid");  
-        resp.send(user);
-//--------------------------------
-        const token = user.generateAuthToken();
-        res.send(token);
-//--------------------------------
-     
+      const user = await User.findOne({email: req.body.email});
+      if(!user) return resp.status(401).json("Wrong credentials");
+
+      const validPassword = await bcrypt.compare(req.body.password, user.password);
+      if(!validPassword) resp.status(400).json("your email or password is invalid");  
+      
+      resp.send(user);
+      //--------------------------------
+      // const token = user.generateAuthToken();
+      // res.send(token); 
+      //--------------------------------
     }catch (err) {
-        resp.status(500).json(err);
+      resp.status(500).json(err);
     }
      
 });
@@ -151,3 +152,29 @@ module.exports = router
 //   const token = user.generateAuthToken();
 //   res.send(token);
 // });
+
+router.post("/updatePassword", async (req, res) => {
+  const {userId, password, newPassword} = req.body;
+  
+  try{
+    const userExists = await User.findOne({_id: userId});
+    if (!userExists) return res.status(404).json({ message: "User does not exist" });
+
+    //compare passwords
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      userExists.password
+    );
+    
+    if(!isPasswordCorrect) return res.status(404).json({ message: "Wrong password" });
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await  bcrypt.hash(newPassword, salt)
+    userExists.password = hashedPassword;
+    userExists.save();
+    return res.status(200).json({ success: "Password Updated Successfuly" });
+
+  }catch(error) {
+    res.status(404).json({ message: "Error: " + error.message });
+  }
+})

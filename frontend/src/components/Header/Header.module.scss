@@ -20,29 +20,19 @@
         padding: 1rem;
     }
 
-    @media screen and (max-width: 480px){
-        order: 3;
+    @media screen and (max-width: 550px){
         gap: 1rem;
-
-        max-width:  479px;
     }
 
     & .logo{
-        // width: 4rem;
-        // height: 4rem;
         width: 12rem;
         height: auto;
-        // background-color: transparent;
-        // border: 2px solid orange;
-        // border-radius: 5rem;
 
         @media screen and (max-width: 1100px){
             width: 10rem;
         }
 
         @media screen and (max-width: 550px){
-            // width: 3rem;
-            // height: 3rem;
             width: 6rem;
         }
 
@@ -59,9 +49,9 @@
         justify-content: space-around;
         align-items: center;
         
-        @media screen and (max-width: 480px){
-            width: 100%;
+        @media screen and (max-width: 550px){
             order: 3;
+            width: 100%;
         }
 
         &_input{
@@ -81,9 +71,9 @@
                 box-shadow: 0px 0px 7px 0px rgba(164, 164, 164, 0.7);
             }
 
-            @media (max-width: 480px) {
+            @media (max-width: 550px) {
                 width: 100%;
-                max-width: 48rem;
+                max-width: 100%;
             }
 
         }
@@ -122,7 +112,7 @@
 
         & .authentication{
             display: flex;
-            gap: 1em;
+            gap: 1.5rem;
 
             &_login{
                 border: none;
@@ -131,14 +121,22 @@
                 &:hover{
                     text-decoration: underline;
                 }
-            }
 
+                @media  (min-width: 550px) and (max-width: 650px){
+                    display: none;
+                }
+            }
+            
             &_login,
             &_signup{
                 font-size: 1.4rem;   
                 cursor: pointer;
+                
+                @media (max-width: 550px) {
+                    font-size: 1.2rem;
+                }
             }
-
+            
             &_signup{
                 padding: 1.2rem 1.6rem;
                 color: white;
@@ -150,6 +148,16 @@
                 
                 &:hover {
                     box-shadow: 0px 0px 7px 0px rgba(255, 165, 0, 0.4);
+                }
+
+                @media  (min-width: 550px) and (max-width: 650px){
+                    font-size: 1.3rem;
+                    padding: 1rem 1.2rem;
+                }
+
+                @media (max-width: 550px) {
+                    padding: 1rem 1.2em;
+                    font-size: 1.2rem;
                 }
             }
         }

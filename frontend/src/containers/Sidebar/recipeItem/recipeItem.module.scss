@@ -59,12 +59,13 @@
         @media (min-width: 330px) and (max-width: 500px){
             padding-top: 35%;
             min-width: 45%;
+            max-width: 45%;
             border-radius: .7rem;
         }
     }
 
     &__info{
-        @include flex($direction: column);
+        @include flex($direction: column, $align: space-between);
         
         padding: 1rem;
         overflow: hidden;
@@ -80,6 +81,11 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
+
+            
+            @media (min-width: 330px) and (max-width: 500px){
+                white-space: pre-wrap;
+            }
         }
 
         & .labels {
